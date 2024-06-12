@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
 import 'package:mobile/ui/create_email_screen.dart';
 import 'package:mobile/ui/login_screen.dart';
+import 'package:mobile/ui/signup_screen.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -84,12 +85,12 @@ class _ActionButtons extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const CreateEmailScreen(),
+                  builder: (context) => const SignupScreen(),
                 ),
               );
             },
             child: const Text(
-              "ُSign up free",
+              "ُSign up",
               style: TextStyle(
                 fontFamily: "AB",
                 fontSize: 16,
