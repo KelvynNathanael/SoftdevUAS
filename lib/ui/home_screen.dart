@@ -8,6 +8,7 @@ import 'package:mobile/bloc/playlist/playlist_bloc.dart';
 import 'package:mobile/bloc/playlist/playlist_event.dart';
 import 'package:mobile/constants/constants.dart';
 import 'package:mobile/ui/albumview_screen.dart';
+import 'package:mobile/ui/edit_profile.dart';
 import 'package:mobile/ui/playlist_search_screen.dart';
 import 'package:mobile/ui/setting_screen.dart';
 import 'package:mobile/widgets/bottom_player.dart';
@@ -580,7 +581,7 @@ class _Header extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const SettingScreen(),
+                              builder: (context) => editProfile(),
                             ),
                           );
                         },

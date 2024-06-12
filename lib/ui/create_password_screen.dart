@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
 import 'package:mobile/ui/choose_gender_screen.dart';
+import 'package:mobile/ui/dashboard_screen.dart';
 
 class CreatePasswordScreen extends StatefulWidget {
   const CreatePasswordScreen({super.key});
@@ -101,7 +102,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ChooseGenderScreen(),
+                        builder: (context) => const DashBoardScreen(),
                       ),
                     );
                   }
