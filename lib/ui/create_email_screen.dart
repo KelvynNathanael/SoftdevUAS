@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
+import 'package:mobile/ui/create_name_screen.dart';
 import 'package:mobile/ui/create_password_screen.dart';
 
 class CreateEmailScreen extends StatefulWidget {
@@ -101,7 +102,7 @@ class _CreateEmailScreenState extends State<CreateEmailScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const CreatePasswordScreen(),
+                        builder: (context) => const CreateNameScreen(),
                       ),
                     );
                   }

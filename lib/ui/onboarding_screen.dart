@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
 import 'package:mobile/ui/create_email_screen.dart';
+import 'package:mobile/ui/login_screen.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -99,7 +100,7 @@ class _ActionButtons extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          OutlinedButton(
+          ElevatedButton(
             style: ElevatedButton.styleFrom(
               minimumSize: Size(MediaQuery.of(context).size.width, 49),
               shape: const RoundedRectangleBorder(
@@ -107,115 +108,22 @@ class _ActionButtons extends StatelessWidget {
                   Radius.circular(25),
                 ),
               ),
-              side: const BorderSide(
-                width: 1,
-                color: MyColors.lightGrey,
+              backgroundColor: const Color.fromARGB(255, 252, 252, 252),
+            ),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => LoginScreen(),
+                ),
+              );
+            },
+            child: const Text(
+              "Log in",
+              style: TextStyle(
+                fontFamily: "AB",
+                fontSize: 16,
+                color: Color.fromARGB(255, 0, 0, 0),
               ),
-              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-            ),
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset("images/icon_google.png"),
-                const Text(
-                  "Continiue with google",
-                  style: TextStyle(
-                    fontFamily: "AB",
-                    fontSize: 16,
-                    color: MyColors.whiteColor,
-                  ),
-                ),
-                const SizedBox(
-                  height: 18,
-                  width: 18,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          OutlinedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(MediaQuery.of(context).size.width, 49),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25),
-                ),
-              ),
-              side: const BorderSide(
-                width: 1,
-                color: MyColors.lightGrey,
-              ),
-              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-            ),
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset("images/icon_facebook.png"),
-                const Text(
-                  "Continiue with Facebook",
-                  style: TextStyle(
-                    fontFamily: "AB",
-                    fontSize: 16,
-                    color: MyColors.whiteColor,
-                  ),
-                ),
-                const SizedBox(
-                  height: 18,
-                  width: 18,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          OutlinedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(MediaQuery.of(context).size.width, 49),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25),
-                ),
-              ),
-              side: const BorderSide(
-                width: 1,
-                color: MyColors.lightGrey,
-              ),
-              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-            ),
-            onPressed: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset("images/icon_apple.png"),
-                const Text(
-                  "Continiue with Apple",
-                  style: TextStyle(
-                    fontFamily: "AB",
-                    fontSize: 16,
-                    color: MyColors.whiteColor,
-                  ),
-                ),
-                const SizedBox(
-                  height: 18,
-                  width: 18,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 15,
-          ),
-          const Text(
-            "Log in",
-            style: TextStyle(
-              fontFamily: "AB",
-              fontSize: 16,
-              color: MyColors.whiteColor,
             ),
           ),
         ],
