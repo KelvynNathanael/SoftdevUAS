@@ -12,251 +12,183 @@ import 'package:mobile/ui/playlist_search_screen.dart';
 import 'package:mobile/ui/setting_screen.dart';
 import 'package:mobile/widgets/bottom_player.dart';
 
+import 'package:mobile/data/model/category.dart';
+import 'package:mobile/data/model/music.dart';
+import 'package:mobile/services/category_operations.dart';
+import 'package:mobile/services/music_operations.dart';
+import 'package:mobile/globals.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:audioplayers/audioplayers.dart';
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            const Color.fromRGBO(119, 18, 18, 1), // Dark red
-            const Color.fromRGBO(49, 12, 12, 1), // Darker red
-          ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromRGBO(119, 18, 18, 1), // Dark red
+              Color.fromRGBO(49, 12, 12, 1), // Darker red
+            ],
+          ),
         ),
-      ),
-      child: SafeArea(
-        bottom: false,
-        child: Stack(
-          alignment: AlignmentDirectional.bottomCenter,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: CustomScrollView(
-                slivers: [
-                  _Header(),
-                  _JumpBackin(),
-                  _TopMixes(),
-                  _RecentPlays(),
-                  SliverPadding(
-                    padding: EdgeInsets.only(bottom: 100),
-                  ),
-                ],
+        child: SafeArea(
+          bottom: false,
+          child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: CustomScrollView(
+                  slivers: [
+                    _Header(),
+                    _JumpBackin(),
+                    _TopMixes(),
+                    _RecentPlays(),
+                    SliverPadding(
+                      padding: EdgeInsets.only(bottom: 100),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 64),
-              child: BottomPlayer(),
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.only(bottom: 64),
+                child: BottomPlayer(),
+              ),
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }
 
-class _RecentPlays extends StatelessWidget {
+class _RecentPlays extends StatefulWidget {
   const _RecentPlays();
+
+  @override
+  State<_RecentPlays> createState() => _RecentPlaysState();
+}
+
+class _RecentPlaysState extends State<_RecentPlays> {
+  late Future<List<Music>> _musicListFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _musicListFuture = MusicOperations.getMusic();
+  }
+
+  Future<void> _loadAndPlayTrack(Music music) async {
+    final yt = YoutubeExplode();
+    final searchResult =
+        await yt.search.search("${music.songName} ${music.artistName}");
+    if (searchResult.isNotEmpty) {
+      final videoId = searchResult.first.id.value;
+      var manifest = await yt.videos.streamsClient.getManifest(videoId);
+      var audioUrl = manifest.audioOnly.last.url;
+      await GlobalPlayerState.audioPlayer.play(UrlSource(audioUrl.toString()));
+      GlobalPlayerState.currentMusic.value = music;
+      GlobalPlayerState.isPlaying.value = true;
+    }
+  }
+
+  Widget createMusic(Music music) {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 133,
+            width: 133,
+            child: InkWell(
+              onTap: () async {
+                await _loadAndPlayTrack(music);
+                // Add any additional actions for mini player if needed
+              },
+              child: Image.network(
+                music.songImage ?? 'https://via.placeholder.com/150',
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(Icons.error);
+                },
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          Text(
+            music.songName ?? 'Unknown Song',
+            style:
+                TextStyle(color: Colors.white, fontSize: 12, fontFamily: 'AB'),
+          ),
+          Text(
+            music.artistName ?? 'Unknown Song',
+            style:
+                TextStyle(color: Colors.white, fontSize: 10, fontFamily: 'AB'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget createMusicList(String label, AsyncSnapshot<List<Music>> snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+      return Center(
+        child: SizedBox(
+          width: 50,
+          height: 50,
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else if (snapshot.hasError) {
+      return Text('Error: ${snapshot.error}');
+    } else {
+      List<Music> musicList = snapshot.data!;
+      return Padding(
+        padding: EdgeInsets.only(left: 10),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'AM'),
+            ),
+            SizedBox(
+              height: 199,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (ctx, index) {
+                  return createMusic(musicList[index]);
+                },
+                itemCount: musicList.length,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.only(top: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Recently played",
-              style: TextStyle(
-                fontFamily: "AM",
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: MyColors.whiteColor,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            SizedBox(
-              height: 199,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) {
-                              var bloc = PlaylistBloc(locator.get());
-                              bloc.add(PlaylistFetchEvent("Upbeat"));
-                              return bloc;
-                            },
-                            child: const PlaylistSearchScreen(
-                              cover: "Upbeat-Mix.jpg",
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 133,
-                          width: 133,
-                          child: Image.asset("images/home/Upbeat-Mix.jpg"),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        const Text(
-                          "Upbeat Mix",
-                          style: TextStyle(
-                            fontFamily: "AB",
-                            fontSize: 12,
-                            color: MyColors.whiteColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 15),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 133,
-                        width: 133,
-                        child: Image.asset("images/home/Daily-Mix-1.jpg"),
-                      ),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      const Text(
-                        "Daily Mix 1",
-                        style: TextStyle(
-                          fontFamily: "AB",
-                          fontSize: 12,
-                          color: MyColors.whiteColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 15),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) {
-                              var bloc = AlbumBloc(locator.get());
-                              bloc.add(
-                                AlbumListEvent("Travis Scott"),
-                              );
-                              return bloc;
-                            },
-                            child: const AlbumViewScreen(),
-                          ),
-                        ),
-                      );
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 133,
-                          width: 133,
-                          child: Image.asset("images/home/UTOPIA.jpg"),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        const Text(
-                          "UTOPIA",
-                          style: TextStyle(
-                            fontFamily: "AB",
-                            fontSize: 12,
-                            color: MyColors.whiteColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 15),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider(
-                            create: (context) {
-                              var bloc = AlbumBloc(locator.get());
-                              bloc.add(AlbumListEvent("21 Savage"));
-                              return bloc;
-                            },
-                            child: const AlbumViewScreen(),
-                          ),
-                        ),
-                      );
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 133,
-                          width: 133,
-                          child: Image.asset("images/home/american-dream.jpg"),
-                        ),
-                        const SizedBox(
-                          height: 12,
-                        ),
-                        const Text(
-                          "american dream",
-                          style: TextStyle(
-                            fontFamily: "AB",
-                            fontSize: 12,
-                            color: MyColors.whiteColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  const Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 65,
-                        backgroundImage: AssetImage("images/artists/JID.jpg"),
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Center(
-                        child: Text(
-                          "JID",
-                          style: TextStyle(
-                            fontFamily: "AB",
-                            fontSize: 12,
-                            color: MyColors.whiteColor,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+        child: FutureBuilder<List<Music>>(
+          future: _musicListFuture,
+          builder: (context, snapshot) {
+            return createMusicList('Recently played', snapshot);
+          },
         ),
       ),
     );

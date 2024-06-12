@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
+import 'package:mobile/data/model/music.dart';
+import 'package:mobile/globals.dart';
 import 'package:mobile/ui/listening_on_screen.dart';
-import 'package:mobile/ui/track_view_screen.dart';
+import 'package:mobile/ui/music_player.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class BottomPlayer extends StatefulWidget {
   const BottomPlayer({super.key});
@@ -11,15 +15,84 @@ class BottomPlayer extends StatefulWidget {
 }
 
 class _BottomPlayerState extends State<BottomPlayer> {
+  AudioPlayer _audioPlayer = GlobalPlayerState.audioPlayer;
+  var Tabs = [];
+  int currentTabIndex = 0;
+
+  List<Music> playlist = [];
+  int currentIndex = 0;
+  bool isLoop = false;
+
   bool _isInPlay = false;
   bool _isLiked = false;
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    _audioPlayer.onPlayerStateChanged.listen((state) {
+      if (state == PlayerState.completed) {
+        _playNextSong();
+      }
+    });
+
+    // Ensure the state updates on music change
+    GlobalPlayerState.currentMusic.addListener(() {
+      setState(() {});
+    });
+    GlobalPlayerState.isPlaying.addListener(() {
+      setState(() {});
+    });
+  }
+
+  Future<void> _loadTrack(Music music) async {
+    final yt = YoutubeExplode();
+    final searchResult =
+        await yt.search.search("${music.songName} ${music.artistName}");
+    if (searchResult.isNotEmpty) {
+      final videoId = searchResult.first.id.value;
+      var manifest = await yt.videos.streamsClient.getManifest(videoId);
+      var audioUrl = manifest.audioOnly.last.url;
+      await _audioPlayer.play(UrlSource(audioUrl.toString()));
+      setState(() {
+        GlobalPlayerState.currentMusic.value = music;
+        GlobalPlayerState.isPlaying.value = true;
+      });
+    }
+  }
+
+  void _playNextSong() {
+    if (currentIndex < playlist.length - 1) {
+      currentIndex++;
+      _loadTrack(playlist[currentIndex]);
+    } else if (isLoop) {
+      currentIndex = 0;
+      _loadTrack(playlist[currentIndex]);
+    }
+  }
+
+  void _playPreviousSong() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      _loadTrack(playlist[currentIndex]);
+    }
+  }
+
+  Widget miniPlayer(Music? music, {bool stop = false}) {
+    if (stop) {
+      GlobalPlayerState.isPlaying.value = false;
+      _audioPlayer.stop();
+    }
+
+    if (music == null) {
+      return const SizedBox();
+    }
+
+    Size deviceSize = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         height: 59,
-        width: MediaQuery.of(context).size.width,
+        width: deviceSize.width,
         decoration: const BoxDecoration(
           color: Color.fromARGB(255, 83, 83, 83),
           borderRadius: BorderRadius.only(
@@ -44,12 +117,18 @@ class _BottomPlayerState extends State<BottomPlayer> {
                           transitionDuration: const Duration(milliseconds: 250),
                           pageBuilder:
                               (context, animation, secondaryAnimation) =>
-                                  const TrackViewScreen(),
+                                  MusicPlayer(
+                            music: music,
+                            player: _audioPlayer,
+                            isPlaying: GlobalPlayerState.isPlaying.value,
+                            onNext: _playNextSong,
+                            onPrevious: _playPreviousSong,
+                            isLoop: isLoop,
+                          ),
                           transitionsBuilder:
                               (context, animation, secondaryAnimation, child) {
                             const begin = Offset(0.0, 1.0);
                             const end = Offset.zero;
-
                             final tween = Tween(begin: begin, end: end);
                             final offsetAnimation = animation.drive(tween);
                             return SlideTransition(
@@ -61,16 +140,21 @@ class _BottomPlayerState extends State<BottomPlayer> {
                       ),
                       child: Row(
                         children: [
-                          Container(
-                            height: 37,
-                            width: 37,
-                            decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                image: AssetImage('images/home/AUSTIN.jpg'),
-                                fit: BoxFit.cover,
-                              ),
-                              borderRadius: BorderRadius.circular(3),
-                            ),
+                          ValueListenableBuilder<Music?>(
+                            valueListenable: GlobalPlayerState.currentMusic,
+                            builder: (context, music, _) {
+                              return Container(
+                                height: 37,
+                                width: 37,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(music?.songImage ?? ''),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius: BorderRadius.circular(3),
+                                ),
+                              );
+                            },
                           ),
                           const SizedBox(width: 10),
                           Column(
@@ -80,23 +164,36 @@ class _BottomPlayerState extends State<BottomPlayer> {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width - 190,
                                 height: 20,
-                                child: const Text(
-                                  "Enough is Enough",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontFamily: "AM",
-                                    color: MyColors.whiteColor,
-                                    fontSize: 13.5,
-                                  ),
+                                child: ValueListenableBuilder<Music?>(
+                                  valueListenable:
+                                      GlobalPlayerState.currentMusic,
+                                  builder: (context, music, _) {
+                                    return Text(
+                                      music?.songName ?? '',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: "AM",
+                                        color: MyColors.whiteColor,
+                                        fontSize: 13.5,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                    );
+                                  },
                                 ),
                               ),
-                              const Text(
-                                "Post Malone",
-                                style: TextStyle(
-                                  fontFamily: "AM",
-                                  fontSize: 12,
-                                  color: MyColors.whiteColor,
-                                ),
+                              ValueListenableBuilder<Music?>(
+                                valueListenable: GlobalPlayerState.currentMusic,
+                                builder: (context, music, _) {
+                                  return Text(
+                                    music?.artistName ?? '',
+                                    style: const TextStyle(
+                                      fontFamily: "AM",
+                                      fontSize: 12,
+                                      color: MyColors.whiteColor,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -154,36 +251,33 @@ class _BottomPlayerState extends State<BottomPlayer> {
                                     ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                _isInPlay = !_isInPlay;
-                              });
+                          ValueListenableBuilder<bool>(
+                            valueListenable: GlobalPlayerState.isPlaying,
+                            builder: (context, isPlaying, _) {
+                              return GestureDetector(
+                                onTap: () async {
+                                  GlobalPlayerState.isPlaying.value =
+                                      !isPlaying;
+                                  if (GlobalPlayerState.isPlaying.value) {
+                                    await _audioPlayer.resume();
+                                  } else {
+                                    await _audioPlayer.pause();
+                                  }
+                                  setState(() {
+                                    _isInPlay = !_isInPlay;
+                                  });
+                                },
+                                child: SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child: isPlaying
+                                      ? Icon(Icons.pause,
+                                          color: MyColors.whiteColor)
+                                      : Icon(Icons.play_arrow,
+                                          color: MyColors.whiteColor),
+                                ),
+                              );
                             },
-                            child: SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: (_isInPlay)
-                                  ? Image.asset(
-                                      'images/icon_play.png',
-                                      color: MyColors.whiteColor,
-                                    )
-                                  : Row(
-                                      children: [
-                                        Container(
-                                          height: 17,
-                                          width: 5,
-                                          color: MyColors.whiteColor,
-                                        ),
-                                        const SizedBox(width: 5),
-                                        Container(
-                                          height: 17,
-                                          width: 5,
-                                          color: MyColors.whiteColor,
-                                        ),
-                                      ],
-                                    ),
-                            ),
                           ),
                         ],
                       ),
@@ -191,27 +285,57 @@ class _BottomPlayerState extends State<BottomPlayer> {
                   ],
                 ),
               ),
-              SliderTheme(
-                data: SliderThemeData(
-                  overlayShape: SliderComponentShape.noOverlay,
-                  thumbShape: SliderComponentShape.noThumb,
-                  trackShape: const RectangularSliderTrackShape(),
-                  trackHeight: 3,
-                ),
-                child: SizedBox(
-                  height: 8,
-                  child: Slider(
-                    activeColor: const Color.fromARGB(255, 230, 229, 229),
-                    inactiveColor: MyColors.lightGrey,
-                    value: 0.5,
-                    onChanged: (onChanged) {},
-                  ),
-                ),
+              StreamBuilder<Duration>(
+                stream: _audioPlayer.onPositionChanged,
+                builder: (context, snapshot) {
+                  final position = snapshot.data ?? Duration.zero;
+                  return FutureBuilder<Duration?>(
+                    future: _audioPlayer.getDuration(),
+                    builder: (context, durationSnapshot) {
+                      final Duration duration =
+                          durationSnapshot.data ?? Duration.zero;
+                      final double maxDuration =
+                          duration.inMilliseconds.toDouble();
+                      final double currentPosition =
+                          position.inMilliseconds.toDouble();
+
+                      return SliderTheme(
+                        data: SliderThemeData(
+                          overlayShape: SliderComponentShape.noOverlay,
+                          thumbShape: SliderComponentShape.noThumb,
+                          trackShape: RectangularSliderTrackShape(),
+                          trackHeight: 3,
+                        ),
+                        child: SizedBox(
+                          height: 12,
+                          child: Slider(
+                            activeColor:
+                                const Color.fromARGB(255, 230, 229, 229),
+                            inactiveColor: MyColors.lightGrey,
+                            value: currentPosition.clamp(0.0, maxDuration),
+                            min: 0.0,
+                            max: maxDuration,
+                            onChanged: (double value) {
+                              final newPosition =
+                                  Duration(milliseconds: value.toInt());
+                              _audioPlayer.seek(newPosition);
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return miniPlayer(GlobalPlayerState.currentMusic.value);
   }
 }

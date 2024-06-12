@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/constants/constants.dart';
 import 'package:mobile/ui/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {
