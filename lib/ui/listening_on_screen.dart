@@ -13,8 +13,18 @@ class _ListeningOnState extends State<ListeningOn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Container(
+        body: Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color.fromRGBO(119, 18, 18, 1), // Dark red
+            const Color.fromRGBO(49, 12, 12, 1), // Darker red
+          ],
+        ),
+      ),
+      child: Container(
         color: MyColors.blackColor,
         child: SafeArea(
           child: Padding(
@@ -248,7 +258,7 @@ class _ListeningOnState extends State<ListeningOn> {
           ),
         ),
       ),
-    );
+    ));
   }
 }
 

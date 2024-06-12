@@ -46,9 +46,8 @@ class AlbumLocalDatasource extends AlbumDatasource {
         "2023",
         "Drake.jpg",
         [
-          const Color(0xff7c837b),
-          const Color(0xff313330),
-          const Color(0xff151515)
+          const Color.fromRGBO(119, 18, 18, 1), // Dark red
+          const Color.fromRGBO(49, 12, 12, 1)
         ],
       );
     } else if (singer == "Travis Scott") {
@@ -89,9 +88,8 @@ class AlbumLocalDatasource extends AlbumDatasource {
         "2023",
         "Travis-Scott.jpg",
         [
-          const Color(0xff544444),
-          const Color(0xff252120),
-          const Color(0xff131313)
+          const Color.fromRGBO(119, 18, 18, 1), // Dark red
+          const Color.fromRGBO(49, 12, 12, 1)
         ],
       );
     } else if (singer == "Post Malone") {
@@ -121,9 +119,8 @@ class AlbumLocalDatasource extends AlbumDatasource {
         "2023",
         "Post-Malone.jpg",
         [
-          const Color(0xff8b9a63),
-          const Color(0xff363a2b),
-          const Color(0xff151513)
+          const Color.fromRGBO(119, 18, 18, 1), // Dark red
+          const Color.fromRGBO(49, 12, 12, 1)
         ],
       );
     } else if (singer == "21 Savage") {
@@ -151,9 +148,8 @@ class AlbumLocalDatasource extends AlbumDatasource {
         "2023",
         "21-Savage.jpg",
         [
-          const Color(0xff747474),
-          const Color(0xff343434),
-          const Color(0xff121212)
+          const Color.fromRGBO(119, 18, 18, 1), // Dark red
+          const Color.fromRGBO(49, 12, 12, 1)
         ],
       );
     } else {

@@ -60,8 +60,18 @@ class _AlbumViewScreenState extends State<AlbumViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.blackColor,
-      body: BlocBuilder<AlbumBloc, AlbumState>(
+        body: Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color.fromRGBO(119, 18, 18, 1), // Dark red
+            const Color.fromRGBO(49, 12, 12, 1), // Darker red
+          ],
+        ),
+      ),
+      child: BlocBuilder<AlbumBloc, AlbumState>(
         builder: (context, state) {
           if (state is AlbumListResponseState) {
             return SafeArea(
@@ -124,7 +134,8 @@ class _AlbumViewScreenState extends State<AlbumViewScreen> {
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
                                   colors: [
-                                    MyColors.blackColor.withOpacity(0),
+                                    const Color.fromARGB(255, 180, 29, 29)
+                                        .withOpacity(0),
                                     MyColors.blackColor.withOpacity(0.1),
                                     MyColors.blackColor.withOpacity(1),
                                   ],
@@ -275,7 +286,7 @@ class _AlbumViewScreenState extends State<AlbumViewScreen> {
           );
         },
       ),
-    );
+    ));
   }
 }
 
@@ -432,8 +443,8 @@ class _AlbumControlButtonsState extends State<_AlbumControlButtons> {
                         ? Image.asset('images/icon_heart.png')
                         : Image.asset(
                             'images/icon_heart_filled.png',
-                            height: 22,
-                            width: 20,
+                            height: 70,
+                            width: 70,
                           ),
                   ),
                   Image.asset('images/icon_downloaded.png'),

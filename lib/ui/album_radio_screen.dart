@@ -7,9 +7,19 @@ class AlbumRadioScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xff1B1A1C),
-      body: SafeArea(
+    return Scaffold(
+        body: Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color.fromRGBO(119, 18, 18, 1), // Dark red
+            const Color.fromRGBO(49, 12, 12, 1), // Darker red
+          ],
+        ),
+      ),
+      child: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: Column(
@@ -33,7 +43,7 @@ class AlbumRadioScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }
 

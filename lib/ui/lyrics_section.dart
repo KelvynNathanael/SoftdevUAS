@@ -14,9 +14,8 @@ class LyricsSection extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color(0xff2c7c93),
-            Color(0xff215260),
-            Color(0xff141517),
+            const Color.fromRGBO(119, 18, 18, 1),
+            const Color.fromRGBO(49, 12, 12, 1),
           ],
         ),
       ),

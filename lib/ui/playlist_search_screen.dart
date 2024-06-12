@@ -18,8 +18,8 @@ class PlaylistSearchScreen extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            Color(0xff7c837b),
-            Colors.black,
+            const Color.fromRGBO(119, 18, 18, 1), // Dark red
+            const Color.fromRGBO(49, 12, 12, 1),
           ],
         ),
       ),
@@ -171,10 +171,14 @@ class _PlaylistActionButtonsState extends State<_PlaylistActionButtons> {
               ),
               Row(
                 children: [
-                  Image.asset('images/icon_spotify.png'),
+                  Image.asset(
+                    'images/Logo1.png',
+                    width: 50, // Set desired width
+                    height: 50,
+                  ),
                   const SizedBox(width: 5),
                   const Text(
-                    "Spotify",
+                    "Devil Music",
                     style: TextStyle(
                       fontFamily: "AM",
                       fontWeight: FontWeight.w700,

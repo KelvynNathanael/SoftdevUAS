@@ -15,8 +15,18 @@ class _ChooseGenderScreenState extends State<ChooseGenderScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.darGreyColor,
-      body: SafeArea(
+      body: Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color.fromRGBO(119, 18, 18, 1), // Dark red
+            const Color.fromRGBO(49, 12, 12, 1), // Darker red
+          ],
+        ),
+      ),
+      child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
@@ -40,7 +50,7 @@ class _ChooseGenderScreenState extends State<ChooseGenderScreen> {
                 height: 51,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
-                  color: Color(0xff777777),
+                  color: Color.fromARGB(255, 124, 120, 120),
                   borderRadius: BorderRadius.all(
                     Radius.circular(8),
                   ),
@@ -48,7 +58,7 @@ class _ChooseGenderScreenState extends State<ChooseGenderScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 25, left: 25),
                   child: DropdownButton(
-                    dropdownColor: MyColors.lightGrey,
+                    dropdownColor: Color.fromARGB(255, 146, 143, 143),
                     itemHeight: 50.0,
                     isExpanded: true,
                     icon: Image.asset("images/icon_tic.png"),
@@ -110,7 +120,7 @@ class _ChooseGenderScreenState extends State<ChooseGenderScreen> {
                   height: 45,
                   width: 90,
                   decoration: const BoxDecoration(
-                    color: MyColors.whiteColor,
+                    color: Color.fromARGB(255, 0, 0, 0),
                     borderRadius: BorderRadius.all(
                       Radius.circular(25),
                     ),
@@ -120,7 +130,7 @@ class _ChooseGenderScreenState extends State<ChooseGenderScreen> {
                       "Next",
                       style: TextStyle(
                         fontFamily: "AB",
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 15,
                       ),
                     ),
@@ -131,7 +141,7 @@ class _ChooseGenderScreenState extends State<ChooseGenderScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 }
 

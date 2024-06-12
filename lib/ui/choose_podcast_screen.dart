@@ -13,8 +13,18 @@ class ChoosePodcastScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.darGreyColor,
-      body: SafeArea(
+        body: Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color.fromRGBO(119, 18, 18, 1), // Dark red
+            const Color.fromRGBO(49, 12, 12, 1), // Darker red
+          ],
+        ),
+      ),
+      child: SafeArea(
         child: BlocBuilder<PodcastBloc, PodcastState>(
           builder: (context, state) {
             if (state is PodcastListState) {
@@ -73,7 +83,7 @@ class ChoosePodcastScreen extends StatelessWidget {
                             Radius.circular(25),
                           ),
                         ),
-                        backgroundColor: MyColors.whiteColor,
+                        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
                       ),
                       onPressed: () {
                         Navigator.push(
@@ -87,7 +97,7 @@ class ChoosePodcastScreen extends StatelessWidget {
                         "Done",
                         style: TextStyle(
                           fontFamily: "AB",
-                          color: Colors.black,
+                          color: Color.fromARGB(255, 255, 255, 255),
                           fontSize: 14,
                         ),
                       ),
@@ -109,7 +119,7 @@ class ChoosePodcastScreen extends StatelessWidget {
           },
         ),
       ),
-    );
+    ));
   }
 }
 
@@ -151,7 +161,7 @@ class _SearchBox extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: 42,
           decoration: const BoxDecoration(
-            color: MyColors.whiteColor,
+            color: Color.fromARGB(255, 0, 0, 0),
             borderRadius: BorderRadius.all(
               Radius.circular(7),
             ),
@@ -166,14 +176,14 @@ class _SearchBox extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: "AM",
                       fontSize: 16,
-                      color: MyColors.blackColor,
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.only(top: 15, left: 15),
                       hintText: "Search",
                       hintStyle: TextStyle(
                         fontFamily: "AM",
-                        color: MyColors.blackColor,
+                        color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 14,
                       ),
                       border: OutlineInputBorder(

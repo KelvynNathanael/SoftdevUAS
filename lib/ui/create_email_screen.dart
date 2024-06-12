@@ -14,8 +14,18 @@ class _CreateEmailScreenState extends State<CreateEmailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.darGreyColor,
-      body: SafeArea(
+        body: Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color.fromRGBO(119, 18, 18, 1), // Dark red
+            const Color.fromRGBO(49, 12, 12, 1), // Darker red
+          ],
+        ),
+      ),
+      child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
@@ -39,7 +49,7 @@ class _CreateEmailScreenState extends State<CreateEmailScreen> {
                 height: 51,
                 width: MediaQuery.of(context).size.width,
                 decoration: const BoxDecoration(
-                  color: Color(0xff777777),
+                  color: Color.fromARGB(255, 134, 133, 133),
                   borderRadius: BorderRadius.all(
                     Radius.circular(8),
                   ),
@@ -101,8 +111,8 @@ class _CreateEmailScreenState extends State<CreateEmailScreen> {
                   width: 90,
                   decoration: BoxDecoration(
                     color: (text.length >= 6)
-                        ? MyColors.whiteColor
-                        : MyColors.lightGrey,
+                        ? const Color.fromARGB(255, 0, 0, 0)
+                        : const Color.fromARGB(255, 0, 0, 0),
                     borderRadius: const BorderRadius.all(
                       Radius.circular(25),
                     ),
@@ -112,7 +122,7 @@ class _CreateEmailScreenState extends State<CreateEmailScreen> {
                       "Next",
                       style: TextStyle(
                         fontFamily: "AB",
-                        color: Colors.black,
+                        color: Color.fromARGB(255, 255, 255, 255),
                         fontSize: 15,
                       ),
                     ),
@@ -123,7 +133,7 @@ class _CreateEmailScreenState extends State<CreateEmailScreen> {
           ),
         ),
       ),
-    );
+    ));
   }
 }
 

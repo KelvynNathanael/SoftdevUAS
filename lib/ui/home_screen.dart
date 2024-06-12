@@ -17,9 +17,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: MyColors.blackColor,
-      body: SafeArea(
+    return Scaffold(
+        body: Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color.fromRGBO(119, 18, 18, 1), // Dark red
+            const Color.fromRGBO(49, 12, 12, 1), // Darker red
+          ],
+        ),
+      ),
+      child: SafeArea(
         bottom: false,
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
@@ -45,7 +55,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
 
@@ -379,7 +389,7 @@ class _JumpBackin extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: "AM",
                                 fontSize: 12.5,
-                                color: MyColors.lightGrey,
+                                color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             ),
                           ],
@@ -434,7 +444,7 @@ class _JumpBackin extends StatelessWidget {
                               style: TextStyle(
                                 fontFamily: "AM",
                                 fontSize: 12.5,
-                                color: MyColors.lightGrey,
+                                color: Color.fromARGB(255, 255, 255, 255),
                               ),
                             ),
                           ],
@@ -931,7 +941,7 @@ class _MixChip extends StatelessWidget {
             style: const TextStyle(
               fontFamily: "AM",
               fontSize: 12.5,
-              color: MyColors.lightGrey,
+              color: Colors.white,
             ),
           ),
         ),

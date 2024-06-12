@@ -9,9 +9,9 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.blackColor,
+      // Hilangkan backgroundColor dari Scaffold
       appBar: AppBar(
-        backgroundColor: const Color(0xff191919),
+        backgroundColor: const Color.fromRGBO(119, 18, 18, 1),
         elevation: 0,
         centerTitle: true,
         toolbarHeight: 65,
@@ -30,30 +30,42 @@ class SettingScreen extends StatelessWidget {
           child: Image.asset("images/icon_arrow_left.png"),
         ),
       ),
-      body: const Stack(
-        alignment: AlignmentDirectional.bottomCenter,
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: CustomScrollView(
-              slivers: [
-                _ProfileSection(),
-                _SettingsOptionChip(title: "Account"),
-                _SettingsOptionChip(title: "Data Saver"),
-                _SettingsOptionChip(title: "Langugages"),
-                _SettingsOptionChip(title: "Playback"),
-                _SettingsOptionChip(title: "Explicit Content"),
-                _SettingsOptionChip(title: "Devices"),
-                _SettingsOptionChip(title: "Car"),
-                _SettingsOptionChip(title: "Social"),
-                _SettingsOptionChip(title: "Voice Assistant & Apps"),
-                _SettingsOptionChip(title: "Audio Quality"),
-                _SettingsOptionChip(title: "Storage"),
-              ],
-            ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color.fromRGBO(119, 18, 18, 1),
+              Color.fromRGBO(49, 12, 12, 1),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          BottomPlayer(),
-        ],
+        ),
+        child: const Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: CustomScrollView(
+                slivers: [
+                  _ProfileSection(),
+                  _SettingsOptionChip(title: "Account"),
+                  _SettingsOptionChip(title: "Data Saver"),
+                  _SettingsOptionChip(title: "Languages"),
+                  _SettingsOptionChip(title: "Playback"),
+                  _SettingsOptionChip(title: "Explicit Content"),
+                  _SettingsOptionChip(title: "Devices"),
+                  _SettingsOptionChip(title: "Car"),
+                  _SettingsOptionChip(title: "Social"),
+                  _SettingsOptionChip(title: "Voice Assistant & Apps"),
+                  _SettingsOptionChip(title: "Audio Quality"),
+                  _SettingsOptionChip(title: "Storage"),
+                ],
+              ),
+            ),
+            BottomPlayer(),
+          ],
+        ),
       ),
     );
   }

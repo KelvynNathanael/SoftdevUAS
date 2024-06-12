@@ -15,130 +15,146 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.blackColor,
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: CustomScrollView(
-            slivers: [
-              const _SearchBox(),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 15, bottom: 20),
-                  child: Text(
-                    "Recent searches",
-                    style: TextStyle(
-                      fontFamily: "AM",
-                      fontWeight: FontWeight.w400,
-                      color: MyColors.whiteColor,
-                      fontSize: 17,
+        backgroundColor: Color.fromRGBO(119, 18, 18, 1),
+        body: SafeArea(
+          child: Stack(
+              alignment: AlignmentDirectional
+                  .topStart, // Adjust for gradient placement
+              children: [
+                // Gradient background
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft, // Adjust for gradient direction
+                      end: Alignment.bottomRight,
+                      colors: [
+                        const Color.fromRGBO(119, 18, 18, 1), // Dark red
+                        const Color.fromRGBO(49, 12, 12, 1),
+                      ],
                     ),
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (cotnext) {
-                            var bloc = AlbumBloc(locator.get());
-                            bloc.add(AlbumListEvent("Post Malone"));
-                            return bloc;
-                          },
-                          child: const AlbumViewScreen(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: CustomScrollView(
+                    slivers: [
+                      const _SearchBox(),
+                      const SliverToBoxAdapter(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 15, bottom: 20),
+                          child: Text(
+                            "Recent searches",
+                            style: TextStyle(
+                              fontFamily: "AM",
+                              fontWeight: FontWeight.w400,
+                              color: MyColors.whiteColor,
+                              fontSize: 17,
+                            ),
+                          ),
                         ),
                       ),
-                    );
-                  },
-                  child: const AlbumChip(
-                    image: "AUSTIN.jpg",
-                    albumName: "AUSTIN",
-                    artistName: "Post Malone",
-                    size: 47,
-                    isDeletable: true,
-                  ),
-                ),
-              ),
-              const ArtistChip(
-                image: 'Doja-Cat.jpg',
-                name: "Doja Cat",
-                radius: 23,
-                isDeletable: true,
-              ),
-              const SongChip(
-                image: "UTOPIA.jpg",
-                singerName: 'Travis Scott',
-                songTitle: "MY EYES",
-                size: 47,
-                isDeletable: true,
-              ),
-              const ArtistChip(
-                image: "Lil-Wayne.jpg",
-                name: "Lil Wayne",
-                radius: 23,
-                isDeletable: true,
-              ),
-              const ArtistChip(
-                image: "Megan-Thee-Stallion.jpg",
-                name: "Megan Thee Stallion",
-                radius: 23,
-                isDeletable: true,
-              ),
-              SliverToBoxAdapter(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BlocProvider(
-                          create: (context) {
-                            var bloc = AlbumBloc(locator.get());
-                            bloc.add(AlbumListEvent("21 Savage"));
-                            return bloc;
+                      SliverToBoxAdapter(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BlocProvider(
+                                  create: (cotnext) {
+                                    var bloc = AlbumBloc(locator.get());
+                                    bloc.add(AlbumListEvent("Post Malone"));
+                                    return bloc;
+                                  },
+                                  child: const AlbumViewScreen(),
+                                ),
+                              ),
+                            );
                           },
-                          child: const AlbumViewScreen(),
+                          child: const AlbumChip(
+                            image: "AUSTIN.jpg",
+                            albumName: "AUSTIN",
+                            artistName: "Post Malone",
+                            size: 47,
+                            isDeletable: true,
+                          ),
                         ),
                       ),
-                    );
-                  },
-                  child: const AlbumChip(
-                    image: "american-dream.jpg",
-                    albumName: "american dream",
-                    artistName: "21 Savage",
-                    size: 47,
-                    isDeletable: true,
+                      const ArtistChip(
+                        image: 'Doja-Cat.jpg',
+                        name: "Doja Cat",
+                        radius: 23,
+                        isDeletable: true,
+                      ),
+                      const SongChip(
+                        image: "UTOPIA.jpg",
+                        singerName: 'Travis Scott',
+                        songTitle: "MY EYES",
+                        size: 47,
+                        isDeletable: true,
+                      ),
+                      const ArtistChip(
+                        image: "Lil-Wayne.jpg",
+                        name: "Lil Wayne",
+                        radius: 23,
+                        isDeletable: true,
+                      ),
+                      const ArtistChip(
+                        image: "Megan-Thee-Stallion.jpg",
+                        name: "Megan Thee Stallion",
+                        radius: 23,
+                        isDeletable: true,
+                      ),
+                      SliverToBoxAdapter(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BlocProvider(
+                                  create: (context) {
+                                    var bloc = AlbumBloc(locator.get());
+                                    bloc.add(AlbumListEvent("21 Savage"));
+                                    return bloc;
+                                  },
+                                  child: const AlbumViewScreen(),
+                                ),
+                              ),
+                            );
+                          },
+                          child: const AlbumChip(
+                            image: "american-dream.jpg",
+                            albumName: "american dream",
+                            artistName: "21 Savage",
+                            size: 47,
+                            isDeletable: true,
+                          ),
+                        ),
+                      ),
+                      const SongChip(
+                        image: "For-All-The-Dogs.jpg",
+                        singerName: 'Drake',
+                        songTitle: "IDGAF",
+                        size: 47,
+                        isDeletable: true,
+                      ),
+                      const ArtistChip(
+                        image: "Taylor-Swift.jpg",
+                        name: "Taylor Swift",
+                        radius: 23,
+                        isDeletable: true,
+                      ),
+                      const SongChip(
+                        image: "AUSTIN.jpg",
+                        singerName: 'Post Malone',
+                        songTitle: "Laugh It Off",
+                        size: 47,
+                        isDeletable: true,
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              const SongChip(
-                image: "For-All-The-Dogs.jpg",
-                singerName: 'Drake',
-                songTitle: "IDGAF",
-                size: 47,
-                isDeletable: true,
-              ),
-              const ArtistChip(
-                image: "Taylor-Swift.jpg",
-                name: "Taylor Swift",
-                radius: 23,
-                isDeletable: true,
-              ),
-              const SongChip(
-                image: "AUSTIN.jpg",
-                singerName: 'Post Malone',
-                songTitle: "Laugh It Off",
-                size: 47,
-                isDeletable: true,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+              ]),
+        ));
   }
 }
 
@@ -157,7 +173,7 @@ class _SearchBox extends StatelessWidget {
               height: 35,
               width: MediaQuery.of(context).size.width - 102.5,
               decoration: const BoxDecoration(
-                color: Color(0xff282828),
+                color: Color.fromARGB(255, 255, 255, 255),
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
                 ),
@@ -168,21 +184,21 @@ class _SearchBox extends StatelessWidget {
                   children: [
                     Image.asset(
                       "images/icon_search_transparent.png",
-                      color: MyColors.whiteColor,
+                      color: const Color.fromARGB(255, 0, 0, 0),
                     ),
                     const Expanded(
                       child: TextField(
                         style: TextStyle(
                           fontFamily: "AM",
                           fontSize: 16,
-                          color: MyColors.whiteColor,
+                          color: Color.fromARGB(255, 15, 15, 15),
                         ),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.only(top: 10, left: 15),
                           hintText: "Search",
                           hintStyle: TextStyle(
                             fontFamily: "AM",
-                            color: MyColors.whiteColor,
+                            color: Color.fromARGB(255, 0, 0, 0),
                             fontSize: 15,
                           ),
                           border: OutlineInputBorder(

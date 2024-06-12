@@ -29,12 +29,25 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.blackColor,
-      body: Center(
-        child: Image.asset(
-          'images/splah_logo.png',
-          height: 200,
-          width: 200,
+      // Set the gradient background for the entire Scaffold
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              const Color.fromRGBO(119, 18, 18, 1), // Dark red
+              const Color.fromRGBO(49, 12, 12, 1), // Darker red
+            ],
+          ),
+        ),
+        // Center the image within the gradient container
+        child: Center(
+          child: Image.asset(
+            'images/Logo1.png',
+            height: 200,
+            width: 200,
+          ),
         ),
       ),
     );

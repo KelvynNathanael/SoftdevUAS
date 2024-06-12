@@ -17,8 +17,18 @@ class SongControlScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: CustomScrollView(
+      body: Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color.fromRGBO(119, 18, 18, 1), // Dark red
+            const Color.fromRGBO(49, 12, 12, 1), // Darker red
+          ],
+        ),
+      ),
+      child: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Container(
@@ -112,7 +122,7 @@ class SongControlScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }
 

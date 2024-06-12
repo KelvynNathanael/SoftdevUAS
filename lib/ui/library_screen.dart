@@ -18,8 +18,18 @@ class LibraryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.blackColor,
-      body: SafeArea(
+        body: Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            const Color.fromRGBO(119, 18, 18, 1), // Dark red
+            const Color.fromRGBO(49, 12, 12, 1), // Darker red
+          ],
+        ),
+      ),
+      child: SafeArea(
         bottom: false,
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
@@ -221,7 +231,7 @@ class LibraryScreen extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
 

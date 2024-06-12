@@ -8,38 +8,53 @@ class OnBoardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: MyColors.blackColor,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Image.asset(
-              "images/onboarding_background.png",
+      // Set the gradient background for the entire Scaffold
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              const Color.fromRGBO(119, 18, 18, 1), // Dark red
+              const Color.fromRGBO(49, 12, 12, 1), // Darker red
+            ],
+          ),
+        ),
+        // Center all content within the gradient container
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Image.asset(
+                  "images/Logo1.png",
+                  height: 300.0,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Text(
+                  "Millions of songs.",
+                  style: TextStyle(
+                    fontFamily: "AB",
+                    fontSize: 28,
+                    color: MyColors.whiteColor,
+                  ),
+                ),
+                const Text(
+                  "Chat In Community",
+                  style: TextStyle(
+                    fontFamily: "AB",
+                    fontSize: 28,
+                    color: MyColors.whiteColor,
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                const _ActionButtons(),
+              ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              "Millions of songs.",
-              style: TextStyle(
-                fontFamily: "AB",
-                fontSize: 28,
-                color: MyColors.whiteColor,
-              ),
-            ),
-            const Text(
-              "Free on Spotify.",
-              style: TextStyle(
-                fontFamily: "AB",
-                fontSize: 28,
-                color: MyColors.whiteColor,
-              ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            const _ActionButtons(),
-          ],
+          ),
         ),
       ),
     );
@@ -63,7 +78,7 @@ class _ActionButtons extends StatelessWidget {
                   Radius.circular(25),
                 ),
               ),
-              backgroundColor: MyColors.greenColor,
+              backgroundColor: const Color.fromARGB(255, 252, 252, 252),
             ),
             onPressed: () {
               Navigator.of(context).push(
@@ -96,6 +111,7 @@ class _ActionButtons extends StatelessWidget {
                 width: 1,
                 color: MyColors.lightGrey,
               ),
+              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
             ),
             onPressed: () {},
             child: Row(
@@ -132,6 +148,7 @@ class _ActionButtons extends StatelessWidget {
                 width: 1,
                 color: MyColors.lightGrey,
               ),
+              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
             ),
             onPressed: () {},
             child: Row(
@@ -168,6 +185,7 @@ class _ActionButtons extends StatelessWidget {
                 width: 1,
                 color: MyColors.lightGrey,
               ),
+              backgroundColor: const Color.fromARGB(255, 0, 0, 0),
             ),
             onPressed: () {},
             child: Row(

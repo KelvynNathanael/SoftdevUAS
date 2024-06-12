@@ -17,13 +17,25 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: MyColors.blackColor,
-      resizeToAvoidBottomInset: false,
+      backgroundColor: Color.fromRGBO(119, 18, 18, 1),
       body: SafeArea(
         bottom: false,
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
+            // Gradient background
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    const Color.fromRGBO(119, 18, 18, 1), // Dark red
+                    const Color.fromRGBO(49, 12, 12, 1),
+                  ],
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: CustomScrollView(
@@ -44,7 +56,6 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              barcodeScanner();
                               // Navigator.push(
                               //   context,
                               //   MaterialPageRoute(
@@ -243,7 +254,7 @@ class _SearchBox extends StatelessWidget {
                 Image.asset("images/icon_search_black.png"),
                 const SizedBox(width: 15),
                 const Text(
-                  "What do you want to listen to?",
+                  "Artists, songs, or podcasts",
                   style: TextStyle(
                     fontFamily: "AB",
                     color: MyColors.darGreyColor,
