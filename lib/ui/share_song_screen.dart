@@ -60,7 +60,7 @@ class ShareSongScreen extends StatelessWidget {
 }
 
 class _SongInfo extends StatelessWidget {
-  const _SongInfo({super.key});
+  const _SongInfo();
 
   @override
   Widget build(BuildContext context) {

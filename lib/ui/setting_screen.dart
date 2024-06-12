@@ -100,7 +100,7 @@ class _SettingsOptionChip extends StatelessWidget {
 }
 
 class _ProfileSection extends StatelessWidget {
-  const _ProfileSection({super.key});
+  const _ProfileSection();
 
   @override
   Widget build(BuildContext context) {
