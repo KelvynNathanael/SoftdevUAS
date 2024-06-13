@@ -4,7 +4,6 @@ import 'package:mobile/DI/service_locator.dart';
 import 'package:mobile/bloc/artist/artist_bloc.dart';
 import 'package:mobile/bloc/artist/artist_event.dart';
 import 'package:mobile/constants/constants.dart';
-import 'package:mobile/ui/choose_artist_screen.dart';
 import 'package:mobile/ui/create_password_screen.dart';
 
 class CreateNameScreen extends StatefulWidget {

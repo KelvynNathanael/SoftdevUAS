@@ -4,6 +4,7 @@ import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:mobile/constants/strings.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:flutter/material.dart';
+import 'package:mobile/data/model/playlist_track.dart';
 
 class MusicOperations {
   MusicOperations._() {}
@@ -90,5 +91,28 @@ class MusicOperations {
       musicList.add(await getMusicDetail(trackId));
     }
     return musicList;
+  }
+
+  static Future<PLaylistTrack> getPlaylistTrack(String trackId) async {
+    final credentials = SpotifyApiCredentials(
+        CustomStrings.clientId, CustomStrings.clientSecret);
+    final spotify = SpotifyApi(credentials);
+
+    final track = await spotify.tracks.get(trackId);
+
+    String? image = track.album?.images?.first.url ?? '';
+    String artistName = track.artists?.first.name ?? '';
+    String? trackName = track.name ?? '';
+
+    return PLaylistTrack(image, artistName, trackName, trackId);
+  }
+
+  static Future<List<PLaylistTrack>> getPlaylistTracks(
+      List<String> trackIds) async {
+    List<PLaylistTrack> playlistTracks = [];
+    for (String trackId in trackIds) {
+      playlistTracks.add(await getPlaylistTrack(trackId));
+    }
+    return playlistTracks;
   }
 }

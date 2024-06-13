@@ -46,9 +46,9 @@ class _MusicPlayerState extends State<MusicPlayer> {
 
     player.onPlayerComplete.listen((_) {
       if (isLoop) {
-        print("Track completed and looping to next");
+        GlobalPlayerState.playTrackAtCurrentIndex();
       } else {
-        print("Track completed");
+        widget.onNext();
       }
     });
   }
@@ -219,7 +219,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
                                   color: Colors.white),
                             ),
                             IconButton(
-                              onPressed: widget.onPrevious,
+                              onPressed: GlobalPlayerState.playPreviousTrack,
                               icon: const Icon(Icons.skip_previous,
                                   color: Colors.white, size: 36),
                             ),
@@ -245,7 +245,7 @@ class _MusicPlayerState extends State<MusicPlayer> {
                               },
                             ),
                             IconButton(
-                              onPressed: widget.onNext,
+                              onPressed: GlobalPlayerState.playNextTrack,
                               icon: const Icon(Icons.skip_next,
                                   color: Colors.white, size: 36),
                             ),
@@ -253,8 +253,9 @@ class _MusicPlayerState extends State<MusicPlayer> {
                               onPressed: _toggleLoop,
                               icon: Icon(
                                 Icons.loop,
-                                color:
-                                    isLoop ? Color(0xFF1BB751) : Colors.white,
+                                color: isLoop
+                                    ? const Color(0xFF1BB751)
+                                    : Colors.white,
                               ),
                             ),
                           ],

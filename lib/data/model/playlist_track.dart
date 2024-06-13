@@ -1,7 +1,15 @@
-class PLaylistTrack {
-  String image;
-  String trackName;
-  String singers;
+import 'package:flutter/material.dart';
 
-  PLaylistTrack(this.image, this.singers, this.trackName);
+class PLaylistTrack {
+  final String image;
+  final String artistName;
+  final String trackName;
+  final String trackId; // Define trackId property
+
+  PLaylistTrack(
+    this.image,
+    this.artistName,
+    this.trackName,
+    this.trackId, // Constructor parameter for trackId
+  );
 }

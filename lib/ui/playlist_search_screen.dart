@@ -1,15 +1,26 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile/bloc/playlist/playlist_bloc.dart';
 import 'package:mobile/bloc/playlist/playlist_state.dart';
 import 'package:mobile/constants/constants.dart';
+import 'package:mobile/data/model/music.dart';
+import 'package:mobile/data/model/playlist_track.dart';
+import 'package:mobile/globals.dart';
 import 'package:mobile/widgets/bottom_player.dart';
 import 'package:mobile/widgets/stream_buttons.dart';
+import 'package:palette_generator/palette_generator.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
-class PlaylistSearchScreen extends StatelessWidget {
+class PlaylistSearchScreen extends StatefulWidget {
   const PlaylistSearchScreen({super.key, required this.cover});
   final String cover;
 
+  @override
+  _PlaylistSearchScreenState createState() => _PlaylistSearchScreenState();
+}
+
+class _PlaylistSearchScreenState extends State<PlaylistSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,7 +48,7 @@ class PlaylistSearchScreen extends StatelessWidget {
                       child: CustomScrollView(
                         slivers: [
                           _Header(
-                            cover: cover,
+                            cover: widget.cover,
                           ),
                           _PlaylistActionButtons(time: state.playlist.time),
                           _SongList(state: state),
@@ -53,7 +64,7 @@ class PlaylistSearchScreen extends StatelessWidget {
               }
               return const Center(
                 child: Text(
-                  "Snap! Error Happened",
+                  "Loading...",
                   style: TextStyle(
                     fontFamily: "AB",
                     fontSize: 18,
@@ -80,49 +91,67 @@ class _SongList extends StatelessWidget {
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (context, index) {
+            final track = state.playlist.tracks[index];
             return Padding(
               padding: const EdgeInsets.only(bottom: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        height: 48,
-                        width: 48,
-                        child: Image.asset(
-                            'images/${state.playlist.tracks[index].image}'),
-                      ),
-                      const SizedBox(width: 5),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width - 115,
-                            child: Text(
-                              state.playlist.tracks[index].trackName,
+              child: InkWell(
+                onTap: () async {
+                  GlobalPlayerState.playlistTracks = state.playlist.tracks;
+                  GlobalPlayerState.currentTrackIndex = index;
+                  await GlobalPlayerState.playTrackAtCurrentIndex();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          height: 48,
+                          width: 48,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: track.image.isNotEmpty
+                                ? Image.network(
+                                    track.image,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.asset(
+                                    'images/default_cover.jpg',
+                                    fit: BoxFit.cover,
+                                  ),
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 115,
+                              child: Text(
+                                track.trackName,
+                                style: const TextStyle(
+                                  fontFamily: "AM",
+                                  fontSize: 16,
+                                  color: MyColors.whiteColor,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Text(
+                              track.artistName,
                               style: const TextStyle(
                                 fontFamily: "AM",
-                                fontSize: 16,
-                                color: MyColors.whiteColor,
+                                color: MyColors.lightGrey,
+                                fontSize: 13,
                               ),
-                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          Text(
-                            state.playlist.tracks[index].singers,
-                            style: const TextStyle(
-                              fontFamily: "AM",
-                              color: MyColors.lightGrey,
-                              fontSize: 13,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Image.asset("images/icon_more.png"),
-                ],
+                          ],
+                        ),
+                      ],
+                    ),
+                    Image.asset("images/icon_more.png"),
+                  ],
+                ),
               ),
             );
           },
@@ -145,6 +174,7 @@ class _PlaylistActionButtonsState extends State<_PlaylistActionButtons> {
   bool _isInPlay = false;
   bool _isDownloaded = false;
   bool _isLiked = false;
+
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
@@ -240,20 +270,28 @@ class _PlaylistActionButtonsState extends State<_PlaylistActionButtons> {
           Padding(
             padding: const EdgeInsets.only(bottom: 10),
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
                 setState(() {
                   _isInPlay = !_isInPlay;
                 });
+                if (_isInPlay) {
+                  // Play the first track
+                  GlobalPlayerState.currentTrackIndex = 0;
+                  await GlobalPlayerState.playTrackAtCurrentIndex();
+                } else {
+                  // Pause the currently playing track
+                  await GlobalPlayerState.pause();
+                }
               },
               child: (_isInPlay)
-                  ? const PlayButton(
+                  ? const PauseButton(
+                      iconWidth: 5,
+                      iconHeight: 19,
                       color: MyColors.greenColor,
                       height: 56,
                       width: 56,
                     )
-                  : const PauseButton(
-                      iconWidth: 5,
-                      iconHeight: 19,
+                  : const PlayButton(
                       color: MyColors.greenColor,
                       height: 56,
                       width: 56,

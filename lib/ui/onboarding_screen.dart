@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
-import 'package:mobile/ui/create_email_screen.dart';
 import 'package:mobile/ui/login_screen.dart';
 import 'package:mobile/ui/signup_screen.dart';
 

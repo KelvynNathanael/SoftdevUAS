@@ -10,12 +10,9 @@ import 'package:mobile/constants/constants.dart';
 import 'package:mobile/ui/albumview_screen.dart';
 import 'package:mobile/ui/edit_profile.dart';
 import 'package:mobile/ui/playlist_search_screen.dart';
-import 'package:mobile/ui/setting_screen.dart';
 import 'package:mobile/widgets/bottom_player.dart';
 
-import 'package:mobile/data/model/category.dart';
 import 'package:mobile/data/model/music.dart';
-import 'package:mobile/services/category_operations.dart';
 import 'package:mobile/services/music_operations.dart';
 import 'package:mobile/globals.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -499,9 +496,28 @@ class _TopMixes extends StatelessWidget {
                   const SizedBox(
                     width: 15,
                   ),
-                  const _MixChip(
-                    subtitle: "Baby keem, Travis Scott and Drake",
-                    image: "Offset-Mix.jpg",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                            create: (context) {
+                              var bloc = PlaylistBloc(locator.get());
+                              bloc.add(PlaylistFetchEvent("baby keem"));
+                              return bloc;
+                            },
+                            child: const PlaylistSearchScreen(
+                              cover: "Offset-Mix.jpg",
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    child: const _MixChip(
+                      subtitle: "Baby keem, Travis Scott and Drake",
+                      image: "Offset-Mix.jpg",
+                    ),
                   ),
                   const SizedBox(
                     width: 15,

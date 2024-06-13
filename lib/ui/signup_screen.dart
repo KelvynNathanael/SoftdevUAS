@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
-import 'package:mobile/ui/create_name_screen.dart';
-import 'package:mobile/ui/create_password_screen.dart';
 import 'package:mobile/ui/dashboard_screen.dart';
 
 class SignupScreen extends StatefulWidget {
