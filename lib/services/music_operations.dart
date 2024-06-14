@@ -21,6 +21,9 @@ class MusicOperations {
       Music(
           trackId:
               '2S2laN33BdttxJ8yyv4VbX'), // Another Day In Paradise - Quinn XCII
+      Music(trackId: '02xwA3Ej9NPetftp9V7VZ3'),
+      Music(trackId: '3mmLyEhphJAaW7hyEXAD8l'),
+      Music(trackId: '5npIL1FmDdtzjLUpLUZ9w7'),
     ];
 
     for (var music in playlist) {

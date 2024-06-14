@@ -220,9 +220,28 @@ class _JumpBackin extends StatelessWidget {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  const _MixChip(
-                    subtitle: "Future, Jack Harllow, Drake and more",
-                    image: "Rap-Workout.jpg",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                            create: (context) {
+                              var bloc = PlaylistBloc(locator.get());
+                              bloc.add(PlaylistFetchEvent('future mix'));
+                              return bloc;
+                            },
+                            child: const PlaylistSearchScreen(
+                              cover: "Rap-Workout.jpg",
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    child: const _MixChip(
+                      subtitle: "Future, Jack Harlow, Drake and more",
+                      image: "Rap-Workout.jpg",
+                    ),
                   ),
                   const SizedBox(
                     width: 15,
@@ -253,25 +272,45 @@ class _JumpBackin extends StatelessWidget {
                   const SizedBox(
                     width: 15,
                   ),
-                  const Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 75,
-                        backgroundImage:
-                            AssetImage("images/artists/Kendrick-Lamar.jpg"),
-                      ),
-                      SizedBox(
-                        height: 12,
-                      ),
-                      Text(
-                        "Kendrick Lamar",
-                        style: TextStyle(
-                          fontFamily: "AB",
-                          fontSize: 12,
-                          color: MyColors.whiteColor,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                            create: (context) {
+                              var bloc = PlaylistBloc(locator.get());
+                              bloc.add(
+                                  PlaylistFetchEvent('Kendrick Lamar mix'));
+                              return bloc;
+                            },
+                            child: const PlaylistSearchScreen(
+                              cover: "Drake-Mix.jpg",
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      );
+                    },
+                    child: const Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 75,
+                          backgroundImage:
+                              AssetImage("images/artists/Kendrick-Lamar.jpg"),
+                        ),
+                        SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          "Kendrick Lamar",
+                          style: TextStyle(
+                            fontFamily: "AB",
+                            fontSize: 12,
+                            color: MyColors.whiteColor,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     width: 15,
@@ -283,11 +322,13 @@ class _JumpBackin extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => BlocProvider(
                             create: (context) {
-                              var bloc = AlbumBloc(locator.get());
-                              bloc.add(AlbumListEvent("Travis Scott"));
+                              var bloc = PlaylistBloc(locator.get());
+                              bloc.add(PlaylistFetchEvent('Travis Scott mix'));
                               return bloc;
                             },
-                            child: const AlbumViewScreen(),
+                            child: const PlaylistSearchScreen(
+                              cover: "UTOPIA.jpg",
+                            ),
                           ),
                         ),
                       );
@@ -337,11 +378,13 @@ class _JumpBackin extends StatelessWidget {
                         MaterialPageRoute(
                           builder: (context) => BlocProvider(
                             create: (context) {
-                              var bloc = AlbumBloc(locator.get());
-                              bloc.add(AlbumListEvent("Drake"));
+                              var bloc = PlaylistBloc(locator.get());
+                              bloc.add(PlaylistFetchEvent('Drake mix'));
                               return bloc;
                             },
-                            child: const AlbumViewScreen(),
+                            child: const PlaylistSearchScreen(
+                              cover: "For-All-The-Dogs.jpg",
+                            ),
                           ),
                         ),
                       );
@@ -636,28 +679,6 @@ class _Header extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
-                Container(
-                  height: 35,
-                  decoration: const BoxDecoration(
-                    color: MyColors.darGreyColor,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(145),
-                    ),
-                  ),
-                  child: const Center(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15),
-                      child: Text(
-                        "Podcasts",
-                        style: TextStyle(
-                          fontFamily: "AM",
-                          fontSize: 14,
-                          color: MyColors.whiteColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
             const SizedBox(
@@ -719,9 +740,28 @@ class _Header extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const _RecentPlaysChip(
-                      image: "artists/JID.jpg",
-                      title: "JID",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) {
+                                var bloc = PlaylistBloc(locator.get());
+                                bloc.add(PlaylistFetchEvent("JID mix"));
+                                return bloc;
+                              },
+                              child: const PlaylistSearchScreen(
+                                cover: "JID.jpg",
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      child: const _RecentPlaysChip(
+                        image: "artists/JID.jpg",
+                        title: "JID",
+                      ),
                     ),
                   ],
                 ),
@@ -736,11 +776,13 @@ class _Header extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
                               create: (context) {
-                                var bloc = AlbumBloc(locator.get());
-                                bloc.add(AlbumListEvent("21 Savage"));
+                                var bloc = PlaylistBloc(locator.get());
+                                bloc.add(PlaylistFetchEvent("21 Savage mix"));
                                 return bloc;
                               },
-                              child: const AlbumViewScreen(),
+                              child: const PlaylistSearchScreen(
+                                cover: "american-dream.jpg",
+                              ),
                             ),
                           ),
                         );
@@ -757,11 +799,14 @@ class _Header extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
                               create: (context) {
-                                var bloc = AlbumBloc(locator.get());
-                                bloc.add(AlbumListEvent("Travis Scott"));
+                                var bloc = PlaylistBloc(locator.get());
+                                bloc.add(
+                                    PlaylistFetchEvent("Travis Scott mix"));
                                 return bloc;
                               },
-                              child: const AlbumViewScreen(),
+                              child: const PlaylistSearchScreen(
+                                cover: "UTOPIA.jpg",
+                              ),
                             ),
                           ),
                         );
@@ -800,9 +845,28 @@ class _Header extends StatelessWidget {
                         title: "Upbeat Mix",
                       ),
                     ),
-                    const _RecentPlaysChip(
-                      image: "home/Daily-Mix-1.jpg",
-                      title: "Daily Mix",
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) {
+                                var bloc = PlaylistBloc(locator.get());
+                                bloc.add(PlaylistFetchEvent("Drake mix"));
+                                return bloc;
+                              },
+                              child: const PlaylistSearchScreen(
+                                cover: "Daily-Mix-1.jpg",
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      child: const _RecentPlaysChip(
+                        image: "home/Daily-Mix-1.jpg",
+                        title: "Daily Mix",
+                      ),
                     ),
                   ],
                 ),
