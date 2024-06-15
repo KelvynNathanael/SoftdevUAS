@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "208460228500",
+    "project_id": "softdevuas-f19ad",
+    "storage_bucket": "softdevuas-f19ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208460228500:android:df2c67f4a92ee2e47c9181",
+        "android_client_info": {
+          "package_name": "com.example.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaepvxViEQWI58Jsl7doY25q7fXPl1EzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 import 'package:mobile/data/model/playlist.dart';
 import 'package:mobile/data/model/playlist_track.dart';
+import 'package:mobile/services/music_operations.dart';
 
 abstract class PlaylistDatasource {
   Future<Playlist> trackList(String mix);
@@ -8,134 +9,206 @@ abstract class PlaylistDatasource {
 class PLaylistLocalDatasource extends PlaylistDatasource {
   @override
   Future<Playlist> trackList(String mix) async {
+    List<String> trackIds = [];
+
+    // Assign trackIds based on the mix
     if (mix == "Drake mix") {
-      return Playlist(
-        "55 min",
-        [
-          PLaylistTrack("drake mix/One-Dance.jpg", "Drake ", "One Dance"),
-          PLaylistTrack(
-              "drake mix/Money-Trees.jpg", "Kendrick Lamar", "Money Trees"),
-          PLaylistTrack("drake mix/God's-Plan.jpg", "Drake ", "God's Plan"),
-          PLaylistTrack("drake mix/Low-Life-(feat. The Weeknd).jpg",
-              "Future, The Weekend", "Low Life (feat. The Weeknd)"),
-          PLaylistTrack("drake mix/WAIT-FOR-U-(feat. Drake).jpg",
-              "Future, Drake, Tmes", "WAIT FOR U (feat. Drake & Tems)"),
-          PLaylistTrack("drake mix/Break-from-Toronto.jpg", "PARTYNEXTDOOR ",
-              "Break from Toronto"),
-          PLaylistTrack(
-              "drake mix/In-My-Feelings.jpg", "Drake ", "In My Feelings"),
-          PLaylistTrack(
-              "drake mix/Ric-Flair-Drip-(with Metro Boomin).jpg",
-              "drake mix/Offset, Metro Boomin",
-              "Ric Flair Drip (with Metro Boomin)"),
-          PLaylistTrack(
-              "drake mix/Nice-For-What.jpg", "Drake ", "Nice For What"),
-          PLaylistTrack(
-              "drake mix/Lovin-On-Me.jpg", "Jack Harlow", "Lovin On Me"),
-          PLaylistTrack(
-              "drake mix/Best-I-Ever-Had.jpg", "Drake ", "Best I Ever Had"),
-          PLaylistTrack("drake mix/redrum.jpg", "21 Savage", "redrum"),
-          PLaylistTrack("drake mix/Trophies.jpg", "Young Money", "Trophies"),
-          PLaylistTrack(
-              "drake mix/Surround-Sound-(feat. 21 Savage).jpg",
-              "JID, 21 Savage, Baby Tate",
-              "Surround Sound (feat. 21 Savage & Baby Tate)"),
-          PLaylistTrack("drake mix/IDGAF-(feat. Yeat).jpg", "Drake, Yeat",
-              "IDGAF (feat. Yeat)"),
-        ],
-      );
+      trackIds = [
+        '466cKvZn1j45IpxDdYZqdA',
+        '7sO5G9EABYOXQKNPNiE9NR',
+        '1zi7xx7UVEFkmKfv06H8x0',
+        '7GX5flRQZVHRAGd6B4TmDO',
+        '6DCZcSspjsKoFjzjrWoCdn',
+        '3B54sVLJ402zGa6Xm4YGNe',
+        '3F5CgOj3wFlRv51JsHbxhe',
+        '3CA9pLiwRIGtUBiMjbZmRw',
+        '0TlLq3lA83rQOYtrqBqSct',
+        '1zgHn1EqUyA0HqNYMdJ5ia',
+        '72TFWvU3wUYdUuxejTTIzt',
+        '6Kj17Afjo1OKJYpf5VzCeo',
+        '1tkg4EHVoqnhR6iFEXb60y',
+        '43PuMrRfbyyuz4QpZ3oAwN',
+        '74tLlkN3rgVzRqQJgPfink',
+      ];
     } else if (mix == "Upbeat") {
-      return Playlist(
-        "35 min",
-        [
-          PLaylistTrack("upbeat/Calm-Down-(with Selena Gomez).jpg",
-              "Rema, Selena Gomez ", "Calm Down (with Selena Gomez)"),
-          PLaylistTrack("upbeat/Feather.jpg", "Sabrina Carpenter", "Feather"),
-          PLaylistTrack(
-              "upbeat/I'm-Good-(Blue).jpg", "David Guetta", "I'm Good (Blue)"),
-          PLaylistTrack("upbeat/Uptown-Funk-(feat. Bruno Mars).jpg",
-              "Mark Ronson, Bruno Mars", "Uptown Funk (feat. Bruno Mars)"),
-          PLaylistTrack(
-              "upbeat/High-Hopes.jpg", "Panic! At The Disco", "High Hopes"),
-          PLaylistTrack(
-              "upbeat/Cake-By-The-Ocean.jpg", "DNCE", "Cake By The Ocean"),
-          PLaylistTrack("upbeat/Better-When-I'm-Dancin'.jpg", "Meghan Trainor",
-              "Better When I'm Dancin'"),
-          PLaylistTrack("upbeat/What-You-Know.jpg", "Two Door Cinema Club",
-              "What You Know"),
-          PLaylistTrack("upbeat/Walking-On-Sunshine.jpg", "Katrina & The Waves",
-              "Walking On Sunshine"),
-          PLaylistTrack("upbeat/Shut-Up-and-Dance.jpg", "WALK THE MOON",
-              "Shut Up and Dance"),
-          PLaylistTrack("upbeat/Feliz,-Alegre-e-Forte.jpg", "Marisa Monte",
-              "Feliz, Alegre e Forte"),
-          PLaylistTrack(
-              "upbeat/Lil-Boo-Thang.jpg", "Paul Russell", "Lil Boo Thang"),
-          PLaylistTrack("upbeat/Classic.jpg", "MKTO ", "Classic"),
-          PLaylistTrack("upbeat/Me-Levanté.jpg", "Dave Bolaño", "Me Levanté"),
-          PLaylistTrack(
-              "upbeat/Feel-It-Still.jpg", "Portugal. The Man", "Feel It Still"),
-        ],
-      );
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
+        // Add more trackIds as needed
+      ];
     } else if (mix == "Chill") {
-      return Playlist(
-        "45 min",
-        [
-          PLaylistTrack(
-              "chill/Shut-up.jpg", "Hotel Ugly ", "Shut up My Moms Calling"),
-          PLaylistTrack("chill/Stick-Season.jpg", "Noah Kahan", "Stick Season"),
-          PLaylistTrack("chill/Dark-Red.jpg", "Steve Lacy", "Dark Red"),
-          PLaylistTrack(
-              "chill/Sunset-Lover.jpg", "Petit Biscuit", "Sunset Lover"),
-          PLaylistTrack("chill/Hex.jpg", "80purppp", "Hex"),
-          PLaylistTrack(
-              "chill/Japanese-Denim.jpg", "Daniel Caesar", "Japanese Denim"),
-          PLaylistTrack(
-              "chill/Yebba’s-Heartbreak.jpg", "Drake ", "Yebba’s Heartbreak"),
-          PLaylistTrack("chill/Location.jpg", "Khalid ", "Location"),
-          PLaylistTrack("chill/Ivy.jpg", "Frank Ocean", "Ivy"),
-          PLaylistTrack("chill/act-ii_date.jpg", "4batz ", "act ii: date @ 8"),
-          PLaylistTrack("chill/Get-You-(feat. Kali Uchis).jpg", "Daniel Caesar",
-              "chill/Get You (feat. Kali Uchis)"),
-          PLaylistTrack("chill/comethru.jpg", "Jeremy Zucker", "comethru"),
-          PLaylistTrack("chill/Come-Back-to-Earth.jpg", "Mac Miller",
-              "Come Back to Earth"),
-          PLaylistTrack("chill/Some.jpg", "Steve Lacy", "Some"),
-        ],
-      );
+      trackIds = [
+        '1IX47gefluXmKX4PrTBCRM',
+        '0doLJjIDrYkoXDb4b9Qa8n',
+        '2S1LebN6AXXQqJolBxlWgO',
+        '6MczIMSdoZyw8EBPhihazN',
+        '3R7e2jGs4kNDvkzEvqcnsc',
+        '14AgBbjVYu2l5vWvbb9XVi',
+        '0GuEv8le1mXsKzx6xBiARx',
+        '7JQeu7AyFO2Pt8tsNdSUFW',
+        '2FML7gk7ac6quGFIjvkDb3',
+        '5FahFQNnmxqiWzJbDNmeIY',
+        '3khEEPRyBeOUabbmOPJzAG',
+        '3kK8euC9eUBRwZKpMsQsDZ',
+        '0ShUHmWaz48KgyjaOG7Tpv',
+        '6wmAHw1szh5RCKSRjiXhPe',
+        '1ep7teyCvaVdPDhxS2Xr0S', // Example trackId for Upbeat mix
+        // Add more trackIds as needed
+      ];
     } else if (mix == "2010") {
-      return Playlist(
-        "1h 2min",
-        [
-          PLaylistTrack("2010/I-Love-You-So.jpg", "The Walters", "Love You So"),
-          PLaylistTrack("2010/See-You-Again-(feat. Kali Uchis).jpg",
-              "Tyler, The Creator", "See You Again (feat. Kali Uchis)"),
-          PLaylistTrack(
-              "2010/Sunflower - Spider-Man_ Into-the-Spider-Verse.jpg",
-              "Post Malone",
-              "Sunflower - Spider-Man: Into the Spider-Verse"),
-          PLaylistTrack(
-              "2010/Cruel-Summer.jpg", "Taylor Swift", "Cruel Summer"),
-          PLaylistTrack(
-              "2010/The-Night-We-Met.jpg", "Lord Huron", "The Night We Met"),
-          PLaylistTrack("2010/Starboy.jpg", "The Weeknd", "Starboy"),
-          PLaylistTrack("2010/No-Role-Modelz.jpg", "J. Cole", "No Role Modelz"),
-          PLaylistTrack("2010/One-Dance.jpg", "Drake", "One Dance"),
-          PLaylistTrack("2010/Pink-White.jpg", "Frank Ocean", "Pink + White"),
-          PLaylistTrack("2010/Lover.jpg", "Taylor Swift", "Lover"),
-          PLaylistTrack("2010/Perfect.jpg", "Ed Sheeran", "Perfect"),
-          PLaylistTrack("2010/Dandelions.jpg", "Ruth B.", "Dandelions"),
-          PLaylistTrack("2010/Dark-Red.jpg", "Steve Lacy", "Dark Red"),
-          PLaylistTrack("2010/Not-Allowed.jpg", "TV Girl", "Not Allowed"),
-          PLaylistTrack("2010/Evergreen.jpg", "Richy Mitch & The Coal Miners",
-              "Evergreen"),
-        ],
-      );
-    } else {
-      return Playlist(
-        "NULL",
-        [],
-      );
+      trackIds = [
+        '47Slg6LuqLaX0VodpSCvPt',
+        '0SiywuOBRcynK0uKGWdCnn',
+        '20I6sIOMTCkB6w7ryavxtO',
+        '0tJGzJjUVlEsn8s3Mn32Jb',
+        '2iuZJX9X9P0GKaE93xcPjk',
+        '6ECp64rv50XVz93WvxXMGF',
+        '6yARPLK0PV4heEyh7pVMGz',
+        '4HlFJV71xXKIGcU3kRyttv',
+        '65YsalQBmQCzIPaay72CzQ',
+        '3rfhI32Il2hVRKDkuGeeen',
+        '2iUmqdfGZcHIhS3b9E9EWq',
+        '5O2P9iiztwhomNh8xkR9lJ',
+        '235LXPXfi0SmOaS9TaCh3c',
+        '5jE48hhRu8E6zBDPRSkEq7',
+        '6Rb0ptOEjBjPPQUlQtQGbL', // Example trackId for Upbeat mix
+        // Add more trackIds as needed
+      ];
+    } else if (mix == "baby keem") {
+      trackIds = [
+        '47Slg6LuqLaX0VodpSCvPt',
+        '0SiywuOBRcynK0uKGWdCnn',
+        '20I6sIOMTCkB6w7ryavxtO',
+        '0tJGzJjUVlEsn8s3Mn32Jb',
+        '2iuZJX9X9P0GKaE93xcPjk',
+        '6ECp64rv50XVz93WvxXMGF',
+        '6yARPLK0PV4heEyh7pVMGz',
+        '4HlFJV71xXKIGcU3kRyttv',
+        '65YsalQBmQCzIPaay72CzQ',
+        '3rfhI32Il2hVRKDkuGeeen',
+        '2iUmqdfGZcHIhS3b9E9EWq',
+        '5O2P9iiztwhomNh8xkR9lJ',
+        '235LXPXfi0SmOaS9TaCh3c',
+        '5jE48hhRu8E6zBDPRSkEq7',
+        '6Rb0ptOEjBjPPQUlQtQGbL', // Example trackId for Upbeat mix
+        // Add more trackIds as needed
+      ];
+    } else if (mix == "future mix") {
+      trackIds = [
+        '466cKvZn1j45IpxDdYZqdA',
+        '7sO5G9EABYOXQKNPNiE9NR',
+        '1zi7xx7UVEFkmKfv06H8x0',
+        '7GX5flRQZVHRAGd6B4TmDO',
+        '6DCZcSspjsKoFjzjrWoCdn',
+        '3B54sVLJ402zGa6Xm4YGNe',
+        '3F5CgOj3wFlRv51JsHbxhe',
+        '3CA9pLiwRIGtUBiMjbZmRw',
+        '0TlLq3lA83rQOYtrqBqSct',
+        '1zgHn1EqUyA0HqNYMdJ5ia',
+        '72TFWvU3wUYdUuxejTTIzt',
+        '6Kj17Afjo1OKJYpf5VzCeo',
+        '1tkg4EHVoqnhR6iFEXb60y',
+        '43PuMrRfbyyuz4QpZ3oAwN',
+        '74tLlkN3rgVzRqQJgPfink', // Example trackId for Upbeat mix
+        // Add more trackIds as needed
+      ];
+    } else if (mix == "Kendrick Lamar mix") {
+      trackIds = [
+        '1IX47gefluXmKX4PrTBCRM',
+        '0doLJjIDrYkoXDb4b9Qa8n',
+        '2S1LebN6AXXQqJolBxlWgO',
+        '6MczIMSdoZyw8EBPhihazN',
+        '3R7e2jGs4kNDvkzEvqcnsc',
+        '14AgBbjVYu2l5vWvbb9XVi',
+        '0GuEv8le1mXsKzx6xBiARx',
+        '7JQeu7AyFO2Pt8tsNdSUFW',
+        '2FML7gk7ac6quGFIjvkDb3',
+        '5FahFQNnmxqiWzJbDNmeIY',
+        '3khEEPRyBeOUabbmOPJzAG',
+        '3kK8euC9eUBRwZKpMsQsDZ',
+        '0ShUHmWaz48KgyjaOG7Tpv',
+        '6wmAHw1szh5RCKSRjiXhPe',
+        '1ep7teyCvaVdPDhxS2Xr0S', // Example trackId for Upbeat mix
+        // Add more trackIds as needed
+      ];
+    } else if (mix == "Travis Scott mix") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
+        // Add more trackIds as needed
+      ];
+    } else if (mix == "JID mix") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
+        // Add more trackIds as needed
+      ];
+    } else if (mix == "21 Savage mix") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
+        // Add more trackIds as needed
+      ];
     }
+    // Add more conditions for other mixes if necessary
+
+    // Get PlaylistTracks dynamically using MusicOperations
+    List<PLaylistTrack> playlistTracks =
+        await MusicOperations.getPlaylistTracks(trackIds);
+
+    // Return Playlist object with dynamically fetched tracks
+    return Playlist(mix, playlistTracks);
   }
 }

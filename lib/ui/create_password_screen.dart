@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
-import 'package:mobile/ui/choose_gender_screen.dart';
 import 'package:mobile/ui/dashboard_screen.dart';
 
 class CreatePasswordScreen extends StatefulWidget {
