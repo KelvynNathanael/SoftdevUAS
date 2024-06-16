@@ -1,12 +1,19 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mobile/constants/constants.dart';
 import 'package:mobile/ui/create_email_screen.dart';
+import 'package:mobile/ui/dashboard_screen.dart';
+import 'package:mobile/ui/home_screen.dart';
 import 'package:mobile/ui/login_screen.dart';
 import 'package:mobile/ui/signup_screen.dart';
 
+  
+
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,8 +134,63 @@ class _ActionButtons extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(
+            height: 15,
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(MediaQuery.of(context).size.width, 49),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(25),
+                ),
+              ),
+              backgroundColor: const Color.fromARGB(255, 252, 252, 252),
+            ),
+            onPressed: () {
+              handleGoogleBtnClick(context);
+            },
+            child: const Text(
+              "Sign-in with google",
+              style: TextStyle(
+                fontFamily: "AB",
+                fontSize: 16,
+                color: Color.fromARGB(255, 0, 0, 0),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
+  handleGoogleBtnClick(BuildContext context) {
+    signInWithGoogle().then((user) async {
+        log('\nUser: ${user.user}');
+        log('\nUserAdditionalInfo: ${user.additionalUserInfo}');
+
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (_) => const DashBoardScreen()));
+      }
+    );
+  }
+
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+  
 }
