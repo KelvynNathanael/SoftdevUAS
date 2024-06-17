@@ -689,55 +689,74 @@ class _Header extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      height: 55,
-                      width: (MediaQuery.of(context).size.width / 1.77) - 45,
-                      decoration: const BoxDecoration(
-                        color: MyColors.darGreyColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Stack(
-                            alignment: AlignmentDirectional.center,
-                            children: [
-                              Container(
-                                height: 55,
-                                width: 55,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(5),
-                                    bottomLeft: Radius.circular(5),
-                                  ),
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                      "images/liked_songs.png",
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => BlocProvider(
+                              create: (context) {
+                                var bloc = PlaylistBloc(locator.get());
+                                bloc.add(PlaylistFetchEvent("liked song"));
+                                return bloc;
+                              },
+                              child: const PlaylistSearchScreen(
+                                cover: "liked_songs.png",
                               ),
-                              Image.asset(
-                                'images/icon_heart_white.png',
-                                height: 20,
-                                width: 20,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          const Text(
-                            "Liked Songs",
-                            style: TextStyle(
-                              fontFamily: "AB",
-                              fontSize: 12,
-                              color: MyColors.whiteColor,
                             ),
                           ),
-                        ],
+                        );
+                      },
+                      child: Container(
+                        height: 55,
+                        width: (MediaQuery.of(context).size.width / 1.77) - 45,
+                        decoration: const BoxDecoration(
+                          color: MyColors.darGreyColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                Container(
+                                  height: 55,
+                                  width: 55,
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(5),
+                                      bottomLeft: Radius.circular(5),
+                                    ),
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                        "images/liked_songs.png",
+                                      ),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Image.asset(
+                                  'images/icon_heart_white.png',
+                                  height: 20,
+                                  width: 20,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            const Text(
+                              "Liked Songs",
+                              style: TextStyle(
+                                fontFamily: "AB",
+                                fontSize: 12,
+                                color: MyColors.whiteColor,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     GestureDetector(

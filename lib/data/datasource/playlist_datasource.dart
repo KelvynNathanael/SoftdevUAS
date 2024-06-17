@@ -1,5 +1,6 @@
 import 'package:mobile/data/model/playlist.dart';
 import 'package:mobile/data/model/playlist_track.dart';
+import 'package:mobile/globals.dart';
 import 'package:mobile/services/music_operations.dart';
 
 abstract class PlaylistDatasource {
@@ -46,8 +47,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '6jjYDGxVJsWS0a5wlVF5vS',
         '7BKLCZ1jbUBVqRi2FVlTVw',
         '4ZtFanR9U6ndgddUvNcjcG',
-        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '2P4OICZRVAQcYAV2JReRfj',
       ];
     } else if (mix == "Chill") {
       trackIds = [
@@ -65,8 +65,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '3kK8euC9eUBRwZKpMsQsDZ',
         '0ShUHmWaz48KgyjaOG7Tpv',
         '6wmAHw1szh5RCKSRjiXhPe',
-        '1ep7teyCvaVdPDhxS2Xr0S', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '1ep7teyCvaVdPDhxS2Xr0S',
       ];
     } else if (mix == "2010") {
       trackIds = [
@@ -84,8 +83,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '5O2P9iiztwhomNh8xkR9lJ',
         '235LXPXfi0SmOaS9TaCh3c',
         '5jE48hhRu8E6zBDPRSkEq7',
-        '6Rb0ptOEjBjPPQUlQtQGbL', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '6Rb0ptOEjBjPPQUlQtQGbL',
       ];
     } else if (mix == "baby keem") {
       trackIds = [
@@ -103,8 +101,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '5O2P9iiztwhomNh8xkR9lJ',
         '235LXPXfi0SmOaS9TaCh3c',
         '5jE48hhRu8E6zBDPRSkEq7',
-        '6Rb0ptOEjBjPPQUlQtQGbL', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '6Rb0ptOEjBjPPQUlQtQGbL',
       ];
     } else if (mix == "future mix") {
       trackIds = [
@@ -122,8 +119,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '6Kj17Afjo1OKJYpf5VzCeo',
         '1tkg4EHVoqnhR6iFEXb60y',
         '43PuMrRfbyyuz4QpZ3oAwN',
-        '74tLlkN3rgVzRqQJgPfink', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '74tLlkN3rgVzRqQJgPfink',
       ];
     } else if (mix == "Kendrick Lamar mix") {
       trackIds = [
@@ -141,8 +137,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '3kK8euC9eUBRwZKpMsQsDZ',
         '0ShUHmWaz48KgyjaOG7Tpv',
         '6wmAHw1szh5RCKSRjiXhPe',
-        '1ep7teyCvaVdPDhxS2Xr0S', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '1ep7teyCvaVdPDhxS2Xr0S',
       ];
     } else if (mix == "Travis Scott mix") {
       trackIds = [
@@ -160,8 +155,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '6jjYDGxVJsWS0a5wlVF5vS',
         '7BKLCZ1jbUBVqRi2FVlTVw',
         '4ZtFanR9U6ndgddUvNcjcG',
-        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '2P4OICZRVAQcYAV2JReRfj',
       ];
     } else if (mix == "JID mix") {
       trackIds = [
@@ -179,8 +173,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '6jjYDGxVJsWS0a5wlVF5vS',
         '7BKLCZ1jbUBVqRi2FVlTVw',
         '4ZtFanR9U6ndgddUvNcjcG',
-        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '2P4OICZRVAQcYAV2JReRfj',
       ];
     } else if (mix == "21 Savage mix") {
       trackIds = [
@@ -198,15 +191,16 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '6jjYDGxVJsWS0a5wlVF5vS',
         '7BKLCZ1jbUBVqRi2FVlTVw',
         '4ZtFanR9U6ndgddUvNcjcG',
-        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '2P4OICZRVAQcYAV2JReRfj',
       ];
+    } else if (mix == "liked song") {
+      // Use GlobalPlayerState.likes for the "liked song" mix
+      trackIds = GlobalPlayerState.likes;
     }
     // Add more conditions for other mixes if necessary
 
     // Get PlaylistTracks dynamically using MusicOperations
-    List<PLaylistTrack> playlistTracks =
-        await MusicOperations.getPlaylistTracks(trackIds);
+    List<PLaylistTrack> playlistTracks = await MusicOperations.getPlaylistTracks(trackIds);
 
     // Return Playlist object with dynamically fetched tracks
     return Playlist(mix, playlistTracks);

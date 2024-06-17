@@ -7,6 +7,7 @@ import 'package:mobile/constants/constants.dart';
 import 'package:mobile/data/model/music.dart';
 import 'package:mobile/data/model/playlist_track.dart';
 import 'package:mobile/globals.dart';
+import 'package:mobile/ui/song_control_screen.dart';
 import 'package:mobile/widgets/bottom_player.dart';
 import 'package:mobile/widgets/stream_buttons.dart';
 import 'package:palette_generator/palette_generator.dart';
@@ -149,7 +150,23 @@ class _SongList extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Image.asset("images/icon_more.png"),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SongControlScreen(
+                              trackId: track.trackId,
+                              trackName: track.trackName,
+                              color: Colors.red, // Provide an appropriate color
+                              singer: track.artistName,
+                              albumImage: track.image,
+                            ),
+                          ),
+                        );
+                      },
+                      child: Image.asset("images/icon_more.png"),
+                    ),
                   ],
                 ),
               ),

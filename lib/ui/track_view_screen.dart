@@ -25,343 +25,50 @@ class _TrackViewScreenState extends State<TrackViewScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Stack(
-            children: [
-              AnimatedSwitcher(
-                duration: const Duration(milliseconds: 200),
-                switchInCurve: Curves.decelerate,
-                switchOutCurve: Curves.decelerate,
-                child: (isSwitchedToNextTab)
-                    ? const LyricsSection(
-                        key: Key("1"),
-                      )
-                    : GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            shadowSwitcher = !shadowSwitcher;
-                          });
-                        },
-                        child: Stack(
-                          children: [
-                            const BackVideoPlayer(
-                              key: Key("2"),
-                            ),
-                            Container(
-                              color: (!shadowSwitcher)
-                                  ? MyColors.blackColor.withOpacity(0.45)
-                                  : Colors.transparent,
-                            ),
-                            Positioned(
-                              left: 25,
-                              bottom: 70,
-                              child: AnimatedOpacity(
-                                duration: const Duration(milliseconds: 200),
-                                opacity: (shadowSwitcher) ? 1 : 0,
-                                child: const Row(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 15,
-                                      backgroundImage: AssetImage(
-                                          'images/artists/Post-Malone.jpg'),
-                                    ),
-                                    SizedBox(width: 15),
-                                    Text(
-                                      "by Post Malone",
-                                      style: TextStyle(
-                                        fontFamily: "AM",
-                                        fontSize: 16,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-              ),
-              const _Header(),
-              AnimatedPositioned(
-                duration: const Duration(milliseconds: 200),
-                top: (isSwitchedToNextTab)
-                    ? (MediaQuery.of(context).size.height * 0.6)
-                    : (MediaQuery.of(context).size.height * 0.5),
-                right: 0,
-                left: 0,
-                child: AnimatedOpacity(
-                  duration: const Duration(milliseconds: 200),
-                  opacity: (shadowSwitcher) ? 0 : 1,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+          AnimatedSwitcher(
+            duration: const Duration(milliseconds: 200),
+            switchInCurve: Curves.decelerate,
+            switchOutCurve: Curves.decelerate,
+            child: (isSwitchedToNextTab)
+                ? const LyricsSection(
+                    key: Key("1"),
+                  )
+                : GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        shadowSwitcher = !shadowSwitcher;
+                      });
+                    },
                     child: Stack(
-                      clipBehavior: Clip.none,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            AnimatedOpacity(
-                              duration: const Duration(milliseconds: 250),
-                              opacity: (isSwitchedToNextTab) ? 0 : 1,
-                              child: SizedBox(
-                                height: 120,
-                                width: 120,
-                                child: Center(
-                                  child: Image.asset(
-                                    "images/home/AUSTIN.jpg",
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 18,
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                          ],
+                        const BackVideoPlayer(
+                          key: Key("2"),
+                        ),
+                        Container(
+                          color: (!shadowSwitcher)
+                              ? MyColors.blackColor.withOpacity(0.45)
+                              : Colors.transparent,
                         ),
                         Positioned(
-                          right: 0,
-                          left: 0,
-                          top: 125,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AnimatedPadding(
-                                duration: const Duration(milliseconds: 200),
-                                padding: EdgeInsets.only(
-                                    top: (isSwitchedToNextTab) ? 50 : 0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(right: 25),
-                                      child: SizedBox(
-                                        width:
-                                            MediaQuery.of(context).size.width -
-                                                95,
-                                        height: 30,
-                                        child: const Text(
-                                          "Enough is Enough",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: "AM",
-                                            color: MyColors.whiteColor,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    const Text(
-                                      "Post Malne",
-                                      style: TextStyle(
-                                        fontFamily: "AM",
-                                        fontSize: 14,
-                                        color: MyColors.whiteColor,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                children: [
-                                  AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 250),
-                                    opacity: (isSwitchedToNextTab) ? 0 : 1,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SongControlScreen(
-                                                    trackName:
-                                                        "Enough is Enough",
-                                                    color: Color(0xff8b9a63),
-                                                    singer: "Post Malone",
-                                                    albumImage: "AUSTIN.jpg"),
-                                          ),
-                                        );
-                                      },
-                                      child: const Icon(
-                                        Icons.more_vert,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 250),
-                                    opacity: (isSwitchedToNextTab) ? 0 : 1,
-                                    child: Image.asset(
-                                      'images/share.png',
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          top: 205,
-                          right: 0,
-                          left: 0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  AnimatedPadding(
-                                    duration: const Duration(milliseconds: 200),
-                                    padding: EdgeInsets.only(
-                                        top: (isSwitchedToNextTab) ? 40 : 0),
-                                    child: const PauseButton(
-                                      iconWidth: 2.5,
-                                      height: 40,
-                                      iconHeight: 14,
-                                      width: 40,
-                                      color: MyColors.whiteColor,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 250),
-                                    opacity: (isSwitchedToNextTab) ? 0 : 1,
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: MyColors.blackColor
-                                            .withOpacity(0.3),
-                                      ),
-                                      child: Center(
-                                        child: Image.asset(
-                                          "images/icon_back_song.png",
-                                          height: 16,
-                                          width: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  AnimatedOpacity(
-                                    duration: const Duration(milliseconds: 250),
-                                    opacity: (isSwitchedToNextTab) ? 0 : 1,
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: MyColors.blackColor
-                                            .withOpacity(0.3),
-                                      ),
-                                      child: Center(
-                                        child: Image.asset(
-                                          "images/icon_next_song.png",
-                                          height: 16,
-                                          width: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              AnimatedOpacity(
-                                duration: const Duration(milliseconds: 250),
-                                opacity: (isSwitchedToNextTab) ? 0 : 1,
-                                child: GestureDetector(
-                                  onTap: () {},
-                                  child: (_isLiked)
-                                      ? Image.asset(
-                                          'images/icon_heart_filled.png',
-                                          height: 22,
-                                          width: 22,
-                                        )
-                                      : Image.asset(
-                                          'images/icon_heart.png',
-                                          color: Colors.white,
-                                        ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          top: 260,
-                          right: 0,
-                          left: 0,
-                          child: AnimatedPadding(
+                          left: 25,
+                          bottom: 70,
+                          child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 200),
-                            padding: EdgeInsets.only(
-                                left: (isSwitchedToNextTab) ? 50 : 0),
-                            child: Column(
+                            opacity: (shadowSwitcher) ? 1 : 0,
+                            child: const Row(
                               children: [
-                                SliderTheme(
-                                  data: const SliderThemeData(
-                                    trackHeight: 2,
-                                    thumbShape: RoundSliderThumbShape(
-                                        enabledThumbRadius: 6.0),
-                                    overlayShape: RoundSliderOverlayShape(
-                                        overlayRadius: 0.0),
-                                  ),
-                                  child: AnimatedContainer(
-                                    duration: const Duration(milliseconds: 200),
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Slider(
-                                      min: 0,
-                                      max: 100,
-                                      activeColor: const Color.fromARGB(
-                                          255, 230, 229, 229),
-                                      inactiveColor: const Color.fromARGB(
-                                          255, 148, 147, 147),
-                                      value: _currentNumber,
-                                      onChanged: (onChanged) {
-                                        setState(() {
-                                          _currentNumber = onChanged;
-                                        });
-                                      },
-                                    ),
-                                  ),
+                                CircleAvatar(
+                                  radius: 15,
+                                  backgroundImage: AssetImage(
+                                      'images/artists/Post-Malone.jpg'),
                                 ),
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 3),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 3),
-                                        child: Text(
-                                          "0:55",
-                                          style: TextStyle(
-                                            fontFamily: "AM",
-                                            fontSize: 12,
-                                            color: Color.fromARGB(
-                                                255, 230, 229, 229),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(right: 2),
-                                        child: Text(
-                                          "2:45",
-                                          style: TextStyle(
-                                            fontFamily: "AM",
-                                            fontSize: 12,
-                                            color: Color.fromARGB(
-                                                255, 230, 229, 229),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                SizedBox(width: 15),
+                                Text(
+                                  "by Post Malone",
+                                  style: TextStyle(
+                                    fontFamily: "AM",
+                                    fontSize: 16,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ],
@@ -371,9 +78,300 @@ class _TrackViewScreenState extends State<TrackViewScreen> {
                       ],
                     ),
                   ),
+          ),
+          const _Header(),
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 200),
+            top: (isSwitchedToNextTab)
+                ? (MediaQuery.of(context).size.height * 0.6)
+                : (MediaQuery.of(context).size.height * 0.5),
+            right: 0,
+            left: 0,
+            child: AnimatedOpacity(
+              duration: const Duration(milliseconds: 200),
+              opacity: (shadowSwitcher) ? 0 : 1,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        AnimatedOpacity(
+                          duration: const Duration(milliseconds: 250),
+                          opacity: (isSwitchedToNextTab) ? 0 : 1,
+                          child: SizedBox(
+                            height: 120,
+                            width: 120,
+                            child: Center(
+                              child: Image.asset(
+                                "images/home/AUSTIN.jpg",
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 18,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                    Positioned(
+                      right: 0,
+                      left: 0,
+                      top: 125,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AnimatedPadding(
+                            duration: const Duration(milliseconds: 200),
+                            padding: EdgeInsets.only(
+                                top: (isSwitchedToNextTab) ? 50 : 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 25),
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width - 95,
+                                    height: 30,
+                                    child: const Text(
+                                      "Enough is Enough",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: "AM",
+                                        color: MyColors.whiteColor,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Text(
+                                  "Post Malne",
+                                  style: TextStyle(
+                                    fontFamily: "AM",
+                                    fontSize: 14,
+                                    color: MyColors.whiteColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 250),
+                                opacity: (isSwitchedToNextTab) ? 0 : 1,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SongControlScreen(
+                                          trackName: "Enough is Enough",
+                                          color: Color(0xff8b9a63),
+                                          singer: "Post Malone",
+                                          albumImage: "AUSTIN.jpg",
+                                          trackId: '',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: const Icon(
+                                    Icons.more_vert,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 250),
+                                opacity: (isSwitchedToNextTab) ? 0 : 1,
+                                child: Image.asset(
+                                  'images/share.png',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 205,
+                      right: 0,
+                      left: 0,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              AnimatedPadding(
+                                duration: const Duration(milliseconds: 200),
+                                padding: EdgeInsets.only(
+                                    top: (isSwitchedToNextTab) ? 40 : 0),
+                                child: const PauseButton(
+                                  iconWidth: 2.5,
+                                  height: 40,
+                                  iconHeight: 14,
+                                  width: 40,
+                                  color: MyColors.whiteColor,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 250),
+                                opacity: (isSwitchedToNextTab) ? 0 : 1,
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: MyColors.blackColor.withOpacity(0.3),
+                                  ),
+                                  child: Center(
+                                    child: Image.asset(
+                                      "images/icon_back_song.png",
+                                      height: 16,
+                                      width: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              AnimatedOpacity(
+                                duration: const Duration(milliseconds: 250),
+                                opacity: (isSwitchedToNextTab) ? 0 : 1,
+                                child: Container(
+                                  height: 40,
+                                  width: 40,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: MyColors.blackColor.withOpacity(0.3),
+                                  ),
+                                  child: Center(
+                                    child: Image.asset(
+                                      "images/icon_next_song.png",
+                                      height: 16,
+                                      width: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          AnimatedOpacity(
+                            duration: const Duration(milliseconds: 250),
+                            opacity: (isSwitchedToNextTab) ? 0 : 1,
+                            child: GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _isLiked = !_isLiked;
+                                });
+                              },
+                              child: (_isLiked)
+                                  ? Image.asset(
+                                      'images/icon_heart_filled.png',
+                                      height: 22,
+                                      width: 22,
+                                    )
+                                  : Image.asset(
+                                      'images/icon_heart.png',
+                                      color: Colors.white,
+                                    ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 260,
+                      right: 0,
+                      left: 0,
+                      child: AnimatedPadding(
+                        duration: const Duration(milliseconds: 200),
+                        padding: EdgeInsets.only(
+                            left: (isSwitchedToNextTab) ? 50 : 0),
+                        child: Column(
+                          children: [
+                            SliderTheme(
+                              data: const SliderThemeData(
+                                trackHeight: 2,
+                                thumbShape: RoundSliderThumbShape(
+                                    enabledThumbRadius: 6.0),
+                                overlayShape:
+                                    RoundSliderOverlayShape(overlayRadius: 0.0),
+                              ),
+                              child: AnimatedContainer(
+                                duration: const Duration(milliseconds: 200),
+                                width: MediaQuery.of(context).size.width,
+                                child: Slider(
+                                  min: 0,
+                                  max: 100,
+                                  activeColor:
+                                      const Color.fromARGB(255, 230, 229, 229),
+                                  inactiveColor:
+                                      const Color.fromARGB(255, 148, 147, 147),
+                                  value: _currentNumber,
+                                  onChanged: (onChanged) {
+                                    setState(() {
+                                      _currentNumber = onChanged;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 3),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 3),
+                                    child: Text(
+                                      "0:55",
+                                      style: TextStyle(
+                                        fontFamily: "AM",
+                                        fontSize: 12,
+                                        color:
+                                            Color.fromARGB(255, 230, 229, 229),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 2),
+                                    child: Text(
+                                      "2:45",
+                                      style: TextStyle(
+                                        fontFamily: "AM",
+                                        fontSize: 12,
+                                        color:
+                                            Color.fromARGB(255, 230, 229, 229),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
           Positioned(
             top: 90,
