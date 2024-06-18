@@ -13,6 +13,20 @@ class GlobalPlayerState {
   static final List<String> likes = [];
   static List<PLaylistTrack> playlistTracks = [];
   static int currentTrackIndex = 0;
+  static Map<String, List<String>> playlists = {};
+  static List<String> playlistToAdd = [];
+
+  static void deletePlaylist(String playlistName) {
+    if (playlists.containsKey(playlistName)) {
+      playlists.remove(playlistName);
+    }
+  }
+
+  static void removeTrackFromPlaylist(String playlistName, String trackId) {
+    if (playlists.containsKey(playlistName)) {
+      playlists[playlistName]?.remove(trackId);
+    }
+  }
 
   static void playNextTrack() {
     if (currentTrackIndex < playlistTracks.length - 1) {

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
 import 'package:mobile/globals.dart';
 import 'package:mobile/ui/share_song_screen.dart';
+import 'package:mobile/data/model/playlist.dart';
+import 'package:mobile/data/model/playlist_track.dart';
+import 'package:mobile/services/music_operations.dart';
 
 class SongControlScreen extends StatelessWidget {
   const SongControlScreen(
@@ -10,12 +13,14 @@ class SongControlScreen extends StatelessWidget {
       required this.trackName,
       required this.color,
       required this.singer,
-      required this.albumImage});
+      required this.albumImage,
+      this.playlistName}); // Modify this line to add the playlist name
   final String trackId;
   final String albumImage;
   final String trackName;
   final Color color;
   final String singer;
+  final String? playlistName;
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +76,15 @@ class SongControlScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Column(
                     children: [
-                      _LikeButton(trackId: trackId), // Updated line
+                      _LikeButton(trackId: trackId),
                       const _AlbumChip(
                           text: "Hide song", image: "icon_hide_song.png"),
-                      const _AlbumChip(
-                          text: "Add to playlist",
-                          image: "icon_add_to_playlist.png"),
+                      GestureDetector(
+                        onTap: () => _showAddToPlaylistDialog(context),
+                        child: const _AlbumChip(
+                            text: "Add to playlist",
+                            image: "icon_add_to_playlist.png"),
+                      ),
                       const _AlbumChip(
                           text: "Add to queue", image: "icon_add_to_quoue.png"),
                       GestureDetector(
@@ -101,6 +109,14 @@ class SongControlScreen extends StatelessWidget {
                           text: "Song credits", image: "icon_song_credits.png"),
                       const _AlbumChip(
                           text: "Sleep timer", image: "icon_sleep_timer.png"),
+                      if (playlistName !=
+                          null) // Only show if a playlist name is provided
+                        GestureDetector(
+                          onTap: () => _removeFromPlaylist(context),
+                          child: const _AlbumChip(
+                              text: "Remove from playlist",
+                              image: "icon_remove_playlist.png"),
+                        ),
                       const SizedBox(height: 30),
                       Center(
                         child: GestureDetector(
@@ -127,6 +143,135 @@ class SongControlScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _showAddToPlaylistDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AddToPlaylistDialog(trackId: trackId),
+    );
+  }
+
+  void _removeFromPlaylist(BuildContext context) {
+    if (playlistName != null) {
+      GlobalPlayerState.removeTrackFromPlaylist(playlistName!, trackId);
+      Navigator.pop(context); // Close the screen after removing the track
+    }
+  }
+}
+
+class AddToPlaylistDialog extends StatefulWidget {
+  final String trackId;
+
+  const AddToPlaylistDialog({required this.trackId});
+
+  @override
+  _AddToPlaylistDialogState createState() => _AddToPlaylistDialogState();
+}
+
+class _AddToPlaylistDialogState extends State<AddToPlaylistDialog> {
+  final TextEditingController _playlistNameController = TextEditingController();
+  String? selectedPlaylist;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text('Add to Playlist'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          DropdownButton<String>(
+            hint: Text('Select Playlist'),
+            value: selectedPlaylist,
+            onChanged: (String? value) {
+              setState(() {
+                selectedPlaylist = value;
+              });
+            },
+            items: GlobalPlayerState.playlists.keys.map((String playlistName) {
+              return DropdownMenuItem<String>(
+                value: playlistName,
+                child: Text(playlistName),
+              );
+            }).toList(),
+          ),
+          TextField(
+            controller: _playlistNameController,
+            decoration: InputDecoration(hintText: 'New Playlist Name'),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel'),
+        ),
+        TextButton(
+          onPressed: () {
+            _addToPlaylist();
+          },
+          child: Text('Add'),
+        ),
+        if (selectedPlaylist != null) ...[
+          if (GlobalPlayerState.playlists[selectedPlaylist]!
+              .contains(widget.trackId))
+            TextButton(
+              onPressed: () {
+                _removeFromPlaylist();
+              },
+              child: Text('Delete from Playlist',
+                  style: TextStyle(color: Colors.red)),
+            ),
+          TextButton(
+            onPressed: () {
+              _deletePlaylist();
+            },
+            child: Text('Delete Playlist', style: TextStyle(color: Colors.red)),
+          ),
+        ]
+      ],
+    );
+  }
+
+  void _addToPlaylist() {
+    if (_playlistNameController.text.isNotEmpty) {
+      String newPlaylistName = _playlistNameController.text;
+      if (!GlobalPlayerState.playlists.containsKey(newPlaylistName)) {
+        GlobalPlayerState.playlists[newPlaylistName] = [];
+      }
+      GlobalPlayerState.playlists[newPlaylistName]!.add(widget.trackId);
+    } else if (selectedPlaylist != null) {
+      GlobalPlayerState.playlists[selectedPlaylist]!.add(widget.trackId);
+    }
+
+    setState(() {
+      _playlistNameController.clear();
+      selectedPlaylist = null;
+    });
+
+    Navigator.of(context).pop();
+  }
+
+  void _removeFromPlaylist() {
+    if (selectedPlaylist != null) {
+      GlobalPlayerState.playlists[selectedPlaylist]!.remove(widget.trackId);
+      setState(() {
+        selectedPlaylist = null;
+      });
+      Navigator.of(context).pop();
+    }
+  }
+
+  void _deletePlaylist() {
+    if (selectedPlaylist != null) {
+      GlobalPlayerState.deletePlaylist(selectedPlaylist!);
+      setState(() {
+        selectedPlaylist = null;
+      });
+      Navigator.of(context).pop();
+    }
   }
 }
 
@@ -248,13 +393,13 @@ class _SongHeader extends StatelessWidget {
             singer,
             style: const TextStyle(
               fontFamily: "AM",
-              fontSize: 14,
+              fontSize: 16,
               color: MyColors.lightGrey,
             ),
           ),
         ),
         const SizedBox(
-          height: 55,
+          height: 20,
         ),
       ],
     );

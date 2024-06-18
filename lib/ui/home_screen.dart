@@ -701,7 +701,7 @@ class _Header extends StatelessWidget {
                                 return bloc;
                               },
                               child: const PlaylistSearchScreen(
-                                cover: "liked_songs.png",
+                                cover: "chill-mix.png",
                               ),
                             ),
                           ),

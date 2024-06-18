@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/DI/service_locator.dart';
+import 'package:mobile/bloc/playlist/playlist_bloc.dart';
+import 'package:mobile/bloc/playlist/playlist_event.dart';
 import 'package:mobile/constants/constants.dart';
+import 'package:mobile/ui/playlist_search_screen.dart';
 import 'package:mobile/widgets/bottom_player.dart';
+import 'package:mobile/globals.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -43,7 +49,7 @@ class ProfileScreen extends StatelessWidget {
                       color: const Color(0xff101010),
                       width: 0,
                     ),
-                    color: Color.fromARGB(255, 0, 0, 0),
+                    color: const Color.fromARGB(255, 0, 0, 0),
                   ),
                   child: const _ProfilePlaylists(),
                 ),
@@ -62,42 +68,101 @@ class _ProfilePlaylists extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        const SizedBox(
-          height: 10,
-        ),
-        Image.asset("images/shazam_playlist.png"),
-        const SizedBox(
-          height: 5,
-        ),
-        Image.asset("images/roadtrip_playlist.png"),
-        const SizedBox(
-          height: 5,
-        ),
-        Image.asset("images/study_playlist.png"),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 15,
+    return Padding(
+      padding: const EdgeInsets.only(top: 25),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: 199,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                ...GlobalPlayerState.playlists.keys.map((playlistName) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider(
+                            create: (context) {
+                              var bloc = PlaylistBloc(locator.get());
+                              bloc.add(PlaylistFetchEvent(playlistName));
+                              return bloc;
+                            },
+                            child: PlaylistSearchScreen(
+                              cover: "Rap-Workout.jpg",
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    child: _PlaylistChip(
+                      title: playlistName,
+                      image: "Rap-Workout.jpg",
+                    ),
+                  );
+                }).toList(),
+              ],
+            ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "See all playlists",
-                style: TextStyle(
-                  fontFamily: "AM",
-                  fontSize: 15,
-                  color: MyColors.whiteColor,
+          const SizedBox(height: 15),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "See all playlists",
+                  style: TextStyle(
+                    fontFamily: "AM",
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              Image.asset("images/icon_arrow_right.png"),
-            ],
+                Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PlaylistChip extends StatelessWidget {
+  final String title;
+  final String image;
+
+  const _PlaylistChip({required this.title, required this.image});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 150,
+      margin: const EdgeInsets.only(right: 15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.grey[300],
+        image: DecorationImage(
+          image: AssetImage(image), // Placeholder image
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Text(
+          title,
+          style: TextStyle(
+            fontFamily: "AB",
+            fontSize: 18,
+            color: Colors.white,
           ),
         ),
-      ],
+      ),
     );
   }
 }
@@ -112,9 +177,7 @@ class _ProfileHeader extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(
-            height: 40,
-          ),
+          const SizedBox(height: 40),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -130,9 +193,7 @@ class _ProfileHeader extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           Center(
             child: Column(
               children: [
@@ -140,9 +201,7 @@ class _ProfileHeader extends StatelessWidget {
                   radius: 55,
                   backgroundImage: AssetImage("images/myImage.png"),
                 ),
-                const SizedBox(
-                  height: 35,
-                ),
+                const SizedBox(height: 35),
                 Container(
                   height: 31,
                   width: 105,
@@ -161,9 +220,7 @@ class _ProfileHeader extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 65,
-                ),
+                const SizedBox(height: 65),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
