@@ -18,220 +18,219 @@ class LibraryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            const Color.fromRGBO(119, 18, 18, 1), // Dark red
-            const Color.fromRGBO(49, 12, 12, 1), // Darker red
-          ],
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromRGBO(119, 18, 18, 1), // Dark red
+              Color.fromRGBO(49, 12, 12, 1), // Darker red
+            ],
+          ),
         ),
-      ),
-      child: SafeArea(
-        bottom: false,
-        child: Stack(
-          alignment: AlignmentDirectional.bottomCenter,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 25, top: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const SettingScreen(),
-                                ),
-                              );
-                            },
-                            child: const Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
+        child: SafeArea(
+          bottom: false,
+          child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 25, top: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SettingScreen(),
+                                  ),
+                                );
+                              },
+                              child: const Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage:
+                                        AssetImage("images/myImage.png"),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    "Your Library",
+                                    style: TextStyle(
+                                      fontFamily: "AB",
+                                      fontSize: 24,
+                                      color: MyColors.whiteColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const ProfileScreen(),
+                                  ),
+                                );
+                              },
+                              child: Image.asset("images/icon_add.png"),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: OptionsList(),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30, bottom: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
                               children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage:
-                                      AssetImage("images/myImage.png"),
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                      "images/arrow_component_down.png",
+                                      width: 10,
+                                      height: 12,
+                                    ),
+                                    Image.asset(
+                                      "images/arrow_component_up.png",
+                                      width: 10,
+                                      height: 12,
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(width: 10),
-                                Text(
-                                  "Your Library",
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Text(
+                                  "Recently Played",
                                   style: TextStyle(
-                                    fontFamily: "AB",
-                                    fontSize: 24,
+                                    fontFamily: "AM",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
                                     color: MyColors.whiteColor,
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const ProfileScreen(),
-                                ),
-                              );
-                            },
-                            child: Image.asset("images/icon_add.png"),
-                          ),
-                        ],
+                            Image.asset("images/icon_category.png"),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: OptionsList(),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 30, bottom: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                    "images/arrow_component_down.png",
-                                    width: 10,
-                                    height: 12,
-                                  ),
-                                  Image.asset(
-                                    "images/arrow_component_up.png",
-                                    width: 10,
-                                    height: 12,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              const Text(
-                                "Recently Played",
-                                style: TextStyle(
-                                  fontFamily: "AM",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
-                                  color: MyColors.whiteColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                          Image.asset("images/icon_category.png"),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const _LikedSongsSection(),
-                  const _NewEpisodesSection(),
-                  SliverToBoxAdapter(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) {
-                                var bloc = AlbumBloc(locator.get());
-                                bloc.add(AlbumListEvent("Drake"));
-                                return bloc;
-                              },
-                              child: const AlbumViewScreen(),
-                            ),
-                          ),
-                        );
-                      },
-                      child: const AlbumChip(
+                    const _LikedSongsSection(),
+                    const _NewEpisodesSection(),
+                    SliverToBoxAdapter(
+                      child: AlbumChip(
                         image: "For-All-The-Dogs.jpg",
                         albumName: "For All The Dogs",
                         artistName: "Drake",
                         size: 65,
                         isDeletable: false,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider(
+                                create: (context) {
+                                  var bloc = AlbumBloc(locator.get());
+                                  bloc.add(AlbumListEvent("Drake"));
+                                  return bloc;
+                                },
+                                child: const AlbumViewScreen(),
+                              ),
+                            ),
+                          );
+                        },
+                        onDelete: () {},
                       ),
                     ),
-                  ),
-                  const ArtistChip(
-                    image: '21-Savage.jpg',
-                    name: "21 Savage",
-                    radius: 35,
-                    isDeletable: false,
-                  ),
-                  const SongChip(
-                    image: "UTOPIA.jpg",
-                    singerName: 'Travis Scott',
-                    songTitle: "I KNOW ?",
-                    size: 47,
-                    isDeletable: false,
-                  ),
-                  const ArtistChip(
-                    image: "Post-Malone.jpg",
-                    name: "Post Malone",
-                    radius: 35,
-                    isDeletable: false,
-                  ),
-                  SliverToBoxAdapter(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) {
-                                var bloc = AlbumBloc(locator.get());
-                                bloc.add(AlbumListEvent("21 Savage"));
-                                return bloc;
-                              },
-                              child: const AlbumViewScreen(),
-                            ),
-                          ),
-                        );
-                      },
-                      child: const AlbumChip(
+                    const ArtistChip(
+                      image: '21-Savage.jpg',
+                      name: "21 Savage",
+                      radius: 35,
+                      isDeletable: false,
+                    ),
+                    const SongChip(
+                      image: "UTOPIA.jpg",
+                      singerName: 'Travis Scott',
+                      songTitle: "I KNOW ?",
+                      size: 47,
+                      isDeletable: false,
+                    ),
+                    const ArtistChip(
+                      image: "Post-Malone.jpg",
+                      name: "Post Malone",
+                      radius: 35,
+                      isDeletable: false,
+                    ),
+                    SliverToBoxAdapter(
+                      child: AlbumChip(
                         image: "american-dream.jpg",
                         albumName: "american dream",
                         artistName: "21 Savage",
                         size: 65,
                         isDeletable: false,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider(
+                                create: (context) {
+                                  var bloc = AlbumBloc(locator.get());
+                                  bloc.add(AlbumListEvent("21 Savage"));
+                                  return bloc;
+                                },
+                                child: const AlbumViewScreen(),
+                              ),
+                            ),
+                          );
+                        },
+                        onDelete: () {},
                       ),
                     ),
-                  ),
-                  const ArtistChip(
-                    image: "J-Cole.jpg",
-                    name: "J Cole",
-                    radius: 35,
-                    isDeletable: false,
-                  ),
-                  const SongChip(
-                    image: "AUSTIN.jpg",
-                    singerName: 'Post Malone',
-                    songTitle: "Landmine",
-                    size: 47,
-                    isDeletable: false,
-                  ),
-                  const SliverPadding(
-                    padding: EdgeInsets.only(bottom: 130),
-                  ),
-                ],
+                    const ArtistChip(
+                      image: "J-Cole.jpg",
+                      name: "J Cole",
+                      radius: 35,
+                      isDeletable: false,
+                    ),
+                    const SongChip(
+                      image: "AUSTIN.jpg",
+                      singerName: 'Post Malone',
+                      songTitle: "Landmine",
+                      size: 47,
+                      isDeletable: false,
+                    ),
+                    const SliverPadding(
+                      padding: EdgeInsets.only(bottom: 130),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(bottom: 64),
-              child: BottomPlayer(),
-            ),
-          ],
+              const Padding(
+                padding: EdgeInsets.only(bottom: 64),
+                child: BottomPlayer(),
+              ),
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 }
 
@@ -259,7 +258,7 @@ class _NewEpisodesSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  "New Episods",
+                  "New Episodes",
                   style: TextStyle(
                     fontFamily: "AM",
                     fontSize: 15,

@@ -15,7 +15,7 @@ class GlobalPlayerState {
   static int currentTrackIndex = 0;
   static Map<String, List<String>> playlists = {};
   static List<String> playlistToAdd = [];
-
+  static List<String> recentSearches = [];
   static void deletePlaylist(String playlistName) {
     if (playlists.containsKey(playlistName)) {
       playlists.remove(playlistName);

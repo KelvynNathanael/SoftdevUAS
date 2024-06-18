@@ -146,22 +146,37 @@ class _PlaylistChip extends StatelessWidget {
       margin: const EdgeInsets.only(right: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Colors.grey[300],
         image: DecorationImage(
-          image: AssetImage(image), // Placeholder image
+          image: AssetImage(
+              "images/home/$image"), // Ensure the correct path is used
           fit: BoxFit.cover,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Text(
-          title,
-          style: TextStyle(
-            fontFamily: "AB",
-            fontSize: 18,
-            color: Colors.white,
+      child: Stack(
+        children: [
+          Positioned(
+            bottom: 12,
+            left: 12,
+            right: 12,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              decoration: BoxDecoration(
+                color:
+                    const Color.fromARGB(255, 189, 189, 189).withOpacity(0.5),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontFamily: "AB",
+                  fontSize: 18,
+                  color: Colors.white,
+                ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
