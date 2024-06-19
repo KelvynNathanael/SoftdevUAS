@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mobile/DI/service_locator.dart';
 import 'package:mobile/bloc/album/album_bloc.dart';
 import 'package:mobile/bloc/album/album_event.dart';
+import 'package:mobile/bloc/playlist/playlist_bloc.dart';
+import 'package:mobile/bloc/playlist/playlist_event.dart';
 import 'package:mobile/constants/constants.dart';
 import 'package:mobile/ui/albumview_screen.dart';
+import 'package:mobile/ui/playlist_search_screen.dart';
 import 'package:mobile/ui/profile_screen.dart';
 import 'package:mobile/ui/setting_screen.dart';
 import 'package:mobile/widgets/album_chip.dart';
@@ -147,11 +150,13 @@ class LibraryScreen extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => BlocProvider(
                                 create: (context) {
-                                  var bloc = AlbumBloc(locator.get());
-                                  bloc.add(AlbumListEvent("Drake"));
+                                  var bloc = PlaylistBloc(locator.get());
+                                  bloc.add(PlaylistFetchEvent('Drake mix'));
                                   return bloc;
                                 },
-                                child: const AlbumViewScreen(),
+                                child: const PlaylistSearchScreen(
+                                  cover: "For-All-The-Dogs.jpg",
+                                ),
                               ),
                             ),
                           );
@@ -159,24 +164,33 @@ class LibraryScreen extends StatelessWidget {
                         onDelete: () {},
                       ),
                     ),
-                    const ArtistChip(
-                      image: '21-Savage.jpg',
-                      name: "21 Savage",
-                      radius: 35,
-                      isDeletable: false,
-                    ),
-                    const SongChip(
-                      image: "UTOPIA.jpg",
-                      singerName: 'Travis Scott',
-                      songTitle: "I KNOW ?",
-                      size: 47,
-                      isDeletable: false,
-                    ),
-                    const ArtistChip(
-                      image: "Post-Malone.jpg",
-                      name: "Post Malone",
-                      radius: 35,
-                      isDeletable: false,
+                    SliverToBoxAdapter(
+                      child: AlbumChip(
+                        image: "UTOPIA.jpg",
+                        albumName: "Travis Scott",
+                        artistName: "Travis Scott",
+                        size: 65,
+                        isDeletable: false,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider(
+                                create: (context) {
+                                  var bloc = PlaylistBloc(locator.get());
+                                  bloc.add(
+                                      PlaylistFetchEvent('Travis Scott mix'));
+                                  return bloc;
+                                },
+                                child: const PlaylistSearchScreen(
+                                  cover: "UTOPIA.jpg",
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        onDelete: () {},
+                      ),
                     ),
                     SliverToBoxAdapter(
                       child: AlbumChip(
@@ -191,11 +205,14 @@ class LibraryScreen extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => BlocProvider(
                                 create: (context) {
-                                  var bloc = AlbumBloc(locator.get());
-                                  bloc.add(AlbumListEvent("21 Savage"));
+                                  var bloc = PlaylistBloc(locator.get());
+                                  bloc.add(
+                                      PlaylistFetchEvent('american dream'));
                                   return bloc;
                                 },
-                                child: const AlbumViewScreen(),
+                                child: const PlaylistSearchScreen(
+                                  cover: "american-dream.jpg",
+                                ),
                               ),
                             ),
                           );
@@ -203,18 +220,32 @@ class LibraryScreen extends StatelessWidget {
                         onDelete: () {},
                       ),
                     ),
-                    const ArtistChip(
-                      image: "J-Cole.jpg",
-                      name: "J Cole",
-                      radius: 35,
-                      isDeletable: false,
-                    ),
-                    const SongChip(
-                      image: "AUSTIN.jpg",
-                      singerName: 'Post Malone',
-                      songTitle: "Landmine",
-                      size: 47,
-                      isDeletable: false,
+                    SliverToBoxAdapter(
+                      child: AlbumChip(
+                        image: "AUSTIN.jpg",
+                        albumName: "Post Malone",
+                        artistName: "Landmine",
+                        size: 65,
+                        isDeletable: false,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider(
+                                create: (context) {
+                                  var bloc = PlaylistBloc(locator.get());
+                                  bloc.add(PlaylistFetchEvent('Post Malone'));
+                                  return bloc;
+                                },
+                                child: const PlaylistSearchScreen(
+                                  cover: "AUSTIN.jpg",
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        onDelete: () {},
+                      ),
                     ),
                     const SliverPadding(
                       padding: EdgeInsets.only(bottom: 130),
@@ -240,52 +271,71 @@ class _NewEpisodesSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 5, bottom: 15),
-        child: Row(
-          children: [
-            Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                Image.asset("images/new_episods.png"),
-                Image.asset("images/icon_bell_fill.png"),
-              ],
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "New Episodes",
-                  style: TextStyle(
-                    fontFamily: "AM",
-                    fontSize: 15,
-                    color: MyColors.whiteColor,
-                    fontWeight: FontWeight.w400,
-                  ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) {
+                  var bloc = PlaylistBloc(locator.get());
+                  bloc.add(PlaylistFetchEvent('New Episodes'));
+                  return bloc;
+                },
+                child: const PlaylistSearchScreen(
+                  cover: "Offset-Mix.jpg",
                 ),
-                const SizedBox(
-                  height: 2,
-                ),
-                Row(
-                  children: [
-                    Image.asset("images/icon_pin.png"),
-                    const SizedBox(width: 5),
-                    const Text(
-                      "Updated 2 days ago",
-                      style: TextStyle(
-                        fontFamily: "AM",
-                        color: MyColors.lightGrey,
-                        fontSize: 13,
-                      ),
+              ),
+            ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(top: 5, bottom: 15),
+          child: Row(
+            children: [
+              Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  Image.asset("images/new_episods.png"),
+                  Image.asset("images/icon_bell_fill.png"),
+                ],
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "New Episodes",
+                    style: TextStyle(
+                      fontFamily: "AM",
+                      fontSize: 15,
+                      color: MyColors.whiteColor,
+                      fontWeight: FontWeight.w400,
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                  ),
+                  const SizedBox(
+                    height: 2,
+                  ),
+                  Row(
+                    children: [
+                      Image.asset("images/icon_pin.png"),
+                      const SizedBox(width: 5),
+                      const Text(
+                        "Updated 2 days ago",
+                        style: TextStyle(
+                          fontFamily: "AM",
+                          color: MyColors.lightGrey,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -298,52 +348,71 @@ class _LikedSongsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 15, bottom: 15),
-        child: Row(
-          children: [
-            Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                Image.asset("images/liked_songs.png"),
-                Image.asset("images/icon_heart_white.png"),
-              ],
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Liked Songs",
-                  style: TextStyle(
-                    fontFamily: "AM",
-                    fontSize: 15,
-                    color: MyColors.whiteColor,
-                    fontWeight: FontWeight.w400,
-                  ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BlocProvider(
+                create: (context) {
+                  var bloc = PlaylistBloc(locator.get());
+                  bloc.add(PlaylistFetchEvent('liked song'));
+                  return bloc;
+                },
+                child: const PlaylistSearchScreen(
+                  cover: "Offset-Mix.jpg",
                 ),
-                const SizedBox(
-                  height: 2,
-                ),
-                Row(
-                  children: [
-                    Image.asset("images/icon_pin.png"),
-                    const SizedBox(width: 5),
-                    const Text(
-                      "Playlist . 58 songs",
-                      style: TextStyle(
-                        fontFamily: "AM",
-                        color: MyColors.lightGrey,
-                        fontSize: 13,
-                      ),
+              ),
+            ),
+          );
+        },
+        child: Padding(
+          padding: const EdgeInsets.only(top: 15, bottom: 15),
+          child: Row(
+            children: [
+              Stack(
+                alignment: AlignmentDirectional.center,
+                children: [
+                  Image.asset("images/liked_songs.png"),
+                  Image.asset("images/icon_heart_white.png"),
+                ],
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Liked Songs",
+                    style: TextStyle(
+                      fontFamily: "AM",
+                      fontSize: 15,
+                      color: MyColors.whiteColor,
+                      fontWeight: FontWeight.w400,
                     ),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                  ),
+                  const SizedBox(
+                    height: 2,
+                  ),
+                  Row(
+                    children: [
+                      Image.asset("images/icon_pin.png"),
+                      const SizedBox(width: 5),
+                      const Text(
+                        "Playlist . 58 songs",
+                        style: TextStyle(
+                          fontFamily: "AM",
+                          color: MyColors.lightGrey,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
