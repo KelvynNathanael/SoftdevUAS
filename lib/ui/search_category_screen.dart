@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mobile/DI/service_locator.dart';
+import 'package:mobile/bloc/playlist/playlist_bloc.dart';
+import 'package:mobile/bloc/playlist/playlist_event.dart';
 import 'package:mobile/constants/constants.dart';
+import 'package:mobile/ui/playlist_search_screen.dart';
 import 'package:mobile/ui/search_screen.dart';
 import 'package:mobile/widgets/bottom_player.dart';
 
@@ -85,73 +90,26 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                       ),
                     ),
                   ),
-                  const SliverToBoxAdapter(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _ImageContainer(title: "", image: "pop.png"),
-                        _ImageContainer(title: "", image: "indie.png"),
-                      ],
-                    ),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 25, bottom: 10),
-                      child: Text(
-                        "Popular podcast categories",
-                        style: TextStyle(
-                          fontFamily: "AM",
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: MyColors.whiteColor,
-                        ),
-                      ),
-                    ),
-                  ),
                   SliverToBoxAdapter(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Stack(
-                          children: [
-                            Container(
-                              width:
-                                  (MediaQuery.of(context).size.width / 1.75) -
-                                      50,
-                              height: 100,
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                    "images/news&politics.png",
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const Positioned(
-                              top: 10,
-                              left: 10,
-                              child: SizedBox(
-                                width: 72,
-                                child: Text(
-                                  "News & Politics",
-                                  style: TextStyle(
-                                    fontFamily: "AB",
-                                    fontSize: 16,
-                                    color: MyColors.whiteColor,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
+                        _ImageContainer(
+                          title: " ",
+                          image: "pop.png",
+                          playlistName: "Pop",
+                          coverImage: "2010s-mix.png",
                         ),
-                        const _ImageContainer(
-                            title: "Comdey", image: "comedy.png"),
+                        _ImageContainer(
+                          title: " ",
+                          image: "indie.png",
+                          playlistName: "Indie",
+                          coverImage: "2010s-mix.png",
+                        ),
                       ],
                     ),
                   ),
+                  
                   const SliverToBoxAdapter(
                     child: Padding(
                       padding: EdgeInsets.only(top: 25, bottom: 10),
@@ -166,26 +124,43 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                       ),
                     ),
                   ),
-                  const SliverToBoxAdapter(
+                  SliverToBoxAdapter(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         _ImageContainer(
-                            title: "2023 Wrapped", image: "2023_wrapped.png"),
+                          title: "2023 Wrapped",
+                          image: "2023_wrapped.png",
+                          playlistName: "2023 Wrapped",
+                          coverImage: "2010s-mix.png",
+                        ),
                         _ImageContainer(
-                            title: "Podcasts", image: "podcasts.png"),
+                          title: "Podcasts",
+                          image: "podcasts.png",
+                          playlistName: "Podcasts",
+                          coverImage: "2010s-mix.png",
+                        ),
                       ],
                     ),
                   ),
-                  const SliverToBoxAdapter(
+                  SliverToBoxAdapter(
                     child: Padding(
                       padding: EdgeInsets.only(top: 12),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           _ImageContainer(
-                              title: "Made for you", image: "made_for_you.png"),
-                          _ImageContainer(title: "Charts", image: "charts.png"),
+                            title: "Made for you",
+                            image: "made_for_you.png",
+                            playlistName: "Made for you",
+                            coverImage: "2010s-mix.png",
+                          ),
+                          _ImageContainer(
+                            title: "Charts",
+                            image: "charts.png",
+                            playlistName: "Charts",
+                            coverImage: "2010s-mix.png",
+                          ),
                         ],
                       ),
                     ),
@@ -271,41 +246,68 @@ class _SearchBox extends StatelessWidget {
 }
 
 class _ImageContainer extends StatelessWidget {
-  const _ImageContainer({required this.title, required this.image});
+  const _ImageContainer({
+    required this.title,
+    required this.image,
+    required this.playlistName,
+    required this.coverImage,
+  });
+
   final String title;
   final String image;
+  final String playlistName;
+  final String coverImage;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 100,
-          width: (MediaQuery.of(context).size.width / 1.75) - 50,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("images/$image"),
-              fit: BoxFit.cover,
-            ),
-            color: Colors.red,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 10,
-          left: 10,
-          child: Text(
-            title,
-            style: const TextStyle(
-              fontFamily: "AB",
-              fontSize: 16,
-              color: MyColors.whiteColor,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) {
+                var bloc = PlaylistBloc(locator.get());
+                bloc.add(PlaylistFetchEvent(playlistName));
+                return bloc;
+              },
+              child: PlaylistSearchScreen(
+                cover: coverImage,
+              ),
             ),
           ),
-        ),
-      ],
+        );
+      },
+      child: Stack(
+        children: [
+          Container(
+            height: 100,
+            width: (MediaQuery.of(context).size.width / 1.75) - 50,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("images/$image"),
+                fit: BoxFit.cover,
+              ),
+              color: Colors.red,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+          ),
+          Positioned(
+            top: 10,
+            left: 10,
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontFamily: "AB",
+                fontSize: 16,
+                color: MyColors.whiteColor,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

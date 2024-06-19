@@ -348,7 +348,7 @@ class _AlbumTrackList extends StatelessWidget {
                     trackName: track.trackName,
                     albumImage: album.albumImage,
                     singer: track.singers,
-                    color: album.colorPallete[0],
+                    color: album.colorPallete[0], trackId: '',
                   ),
                 ),
               );

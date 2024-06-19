@@ -10,9 +10,23 @@ class GlobalPlayerState {
   static final AudioPlayer audioPlayer = AudioPlayer();
   static final ValueNotifier<Music?> currentMusic = ValueNotifier<Music?>(null);
   static final ValueNotifier<bool> isPlaying = ValueNotifier<bool>(false);
-
+  static final List<String> likes = [];
   static List<PLaylistTrack> playlistTracks = [];
   static int currentTrackIndex = 0;
+  static Map<String, List<String>> playlists = {};
+  static List<String> playlistToAdd = [];
+  static List<String> recentSearches = [];
+  static void deletePlaylist(String playlistName) {
+    if (playlists.containsKey(playlistName)) {
+      playlists.remove(playlistName);
+    }
+  }
+
+  static void removeTrackFromPlaylist(String playlistName, String trackId) {
+    if (playlists.containsKey(playlistName)) {
+      playlists[playlistName]?.remove(trackId);
+    }
+  }
 
   static void playNextTrack() {
     if (currentTrackIndex < playlistTracks.length - 1) {
@@ -57,5 +71,11 @@ class GlobalPlayerState {
   static Future<void> pause() async {
     await audioPlayer.pause();
     isPlaying.value = false;
+  }
+
+  static void likeTrack(String trackId) {
+    if (!likes.contains(trackId)) {
+      likes.add(trackId);
+    }
   }
 }

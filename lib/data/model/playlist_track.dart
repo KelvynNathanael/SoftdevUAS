@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class PLaylistTrack {
   final String image;
   final String artistName;

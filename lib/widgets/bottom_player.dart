@@ -24,7 +24,6 @@ class _BottomPlayerState extends State<BottomPlayer> {
   bool isLoop = false;
 
   bool _isInPlay = false;
-  bool _isLiked = false;
 
   @override
   void initState() {
@@ -88,6 +87,9 @@ class _BottomPlayerState extends State<BottomPlayer> {
     }
 
     Size deviceSize = MediaQuery.of(context).size;
+    bool isLiked =
+        GlobalPlayerState.likes.contains(music.trackId); // Updated line
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
@@ -225,10 +227,16 @@ class _BottomPlayerState extends State<BottomPlayer> {
                             child: GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  _isLiked = !_isLiked;
+                                  isLiked = !isLiked;
+                                  if (isLiked) {
+                                    GlobalPlayerState.likes.add(music.trackId);
+                                  } else {
+                                    GlobalPlayerState.likes
+                                        .remove(music.trackId);
+                                  }
                                 });
                               },
-                              child: (_isLiked)
+                              child: (isLiked)
                                   ? Row(
                                       children: [
                                         Image.asset(

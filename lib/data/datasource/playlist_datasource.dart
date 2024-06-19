@@ -1,5 +1,6 @@
 import 'package:mobile/data/model/playlist.dart';
 import 'package:mobile/data/model/playlist_track.dart';
+import 'package:mobile/globals.dart';
 import 'package:mobile/services/music_operations.dart';
 
 abstract class PlaylistDatasource {
@@ -46,8 +47,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '6jjYDGxVJsWS0a5wlVF5vS',
         '7BKLCZ1jbUBVqRi2FVlTVw',
         '4ZtFanR9U6ndgddUvNcjcG',
-        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '2P4OICZRVAQcYAV2JReRfj',
       ];
     } else if (mix == "Chill") {
       trackIds = [
@@ -65,8 +65,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '3kK8euC9eUBRwZKpMsQsDZ',
         '0ShUHmWaz48KgyjaOG7Tpv',
         '6wmAHw1szh5RCKSRjiXhPe',
-        '1ep7teyCvaVdPDhxS2Xr0S', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '1ep7teyCvaVdPDhxS2Xr0S',
       ];
     } else if (mix == "2010") {
       trackIds = [
@@ -84,8 +83,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '5O2P9iiztwhomNh8xkR9lJ',
         '235LXPXfi0SmOaS9TaCh3c',
         '5jE48hhRu8E6zBDPRSkEq7',
-        '6Rb0ptOEjBjPPQUlQtQGbL', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '6Rb0ptOEjBjPPQUlQtQGbL',
       ];
     } else if (mix == "baby keem") {
       trackIds = [
@@ -103,8 +101,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '5O2P9iiztwhomNh8xkR9lJ',
         '235LXPXfi0SmOaS9TaCh3c',
         '5jE48hhRu8E6zBDPRSkEq7',
-        '6Rb0ptOEjBjPPQUlQtQGbL', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '6Rb0ptOEjBjPPQUlQtQGbL',
       ];
     } else if (mix == "future mix") {
       trackIds = [
@@ -122,8 +119,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '6Kj17Afjo1OKJYpf5VzCeo',
         '1tkg4EHVoqnhR6iFEXb60y',
         '43PuMrRfbyyuz4QpZ3oAwN',
-        '74tLlkN3rgVzRqQJgPfink', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '74tLlkN3rgVzRqQJgPfink',
       ];
     } else if (mix == "Kendrick Lamar mix") {
       trackIds = [
@@ -141,8 +137,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '3kK8euC9eUBRwZKpMsQsDZ',
         '0ShUHmWaz48KgyjaOG7Tpv',
         '6wmAHw1szh5RCKSRjiXhPe',
-        '1ep7teyCvaVdPDhxS2Xr0S', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '1ep7teyCvaVdPDhxS2Xr0S',
       ];
     } else if (mix == "Travis Scott mix") {
       trackIds = [
@@ -160,8 +155,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '6jjYDGxVJsWS0a5wlVF5vS',
         '7BKLCZ1jbUBVqRi2FVlTVw',
         '4ZtFanR9U6ndgddUvNcjcG',
-        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '2P4OICZRVAQcYAV2JReRfj',
       ];
     } else if (mix == "JID mix") {
       trackIds = [
@@ -179,8 +173,7 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '6jjYDGxVJsWS0a5wlVF5vS',
         '7BKLCZ1jbUBVqRi2FVlTVw',
         '4ZtFanR9U6ndgddUvNcjcG',
-        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '2P4OICZRVAQcYAV2JReRfj',
       ];
     } else if (mix == "21 Savage mix") {
       trackIds = [
@@ -198,9 +191,287 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
         '6jjYDGxVJsWS0a5wlVF5vS',
         '7BKLCZ1jbUBVqRi2FVlTVw',
         '4ZtFanR9U6ndgddUvNcjcG',
-        '2P4OICZRVAQcYAV2JReRfj', // Example trackId for Upbeat mix
-        // Add more trackIds as needed
+        '2P4OICZRVAQcYAV2JReRfj',
       ];
+    }else if (mix == "New Episodes") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "AUSTIN") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "J Cole") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "american dream") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "Post Malone") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "UTOPIA") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "For All The Dogs") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "I KNOW ?") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "Landmine") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "Pop") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "Indie") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "2023 Wrapped") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "Podcasts") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "Made for you") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }else if (mix == "Charts") {
+      trackIds = [
+        '6ebkx7Q5tTxrCxKq4GYj0Y',
+        '2M3g1eQZvnmsi8iMESZYY9',
+        '5nujrmhLynf4yMoMtj8AQF',
+        '4cluDES4hQEUhmXj6TXkSo',
+        '1PSBzsahR2AKwLJgx8ehBj',
+        '2BgEsaKNfHUdlh97KmvFyo',
+        '2bT1PH7Cw3J9p3t7nlXCdh',
+        '3P3pw6C19j31Rnzgo3JG7o',
+        '2qQpFbqqkLOGySgNK8wBXt',
+        '6PCUP3dWmTjcTtXY02oFdT',
+        '7npLlaPu9Mfno8hjk5OagD',
+        '6jjYDGxVJsWS0a5wlVF5vS',
+        '7BKLCZ1jbUBVqRi2FVlTVw',
+        '4ZtFanR9U6ndgddUvNcjcG',
+        '2P4OICZRVAQcYAV2JReRfj',
+      ];
+    }
+     else if (mix == "liked song") {
+      // Use GlobalPlayerState.likes for the "liked song" mix
+      trackIds = GlobalPlayerState.likes;
+    } else {
+      // Check for user-created playlists
+      if (GlobalPlayerState.playlists.containsKey(mix)) {
+        trackIds = GlobalPlayerState.playlists[mix]!;
+      }
     }
     // Add more conditions for other mixes if necessary
 
@@ -212,3 +483,4 @@ class PLaylistLocalDatasource extends PlaylistDatasource {
     return Playlist(mix, playlistTracks);
   }
 }
+
