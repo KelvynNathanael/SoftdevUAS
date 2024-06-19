@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_countdown_timer/current_remaining_time.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:mobile/DI/service_locator.dart';
 import 'package:mobile/bloc/album/album_bloc.dart';
 import 'package:mobile/bloc/album/album_event.dart';
@@ -598,8 +602,34 @@ class _TopMixes extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header();
+class _Header extends StatefulWidget {
+  @override
+  _HeaderState createState() => _HeaderState();
+}
+
+class _HeaderState extends State<_Header> {
+  int? _selectedMinutes;
+  int _endTime = DateTime.now().millisecondsSinceEpoch;
+  bool _isTimerRunning = false;
+
+  void onEnd() {
+    setState(() {
+      _isTimerRunning = false;
+    });
+    print('Timer ended');
+    // Close the app
+    SystemNavigator.pop();
+  }
+
+  void startTimer() {
+    if (_selectedMinutes != null) {
+      setState(() {
+        _endTime = DateTime.now().millisecondsSinceEpoch +
+            1000 * 60 * _selectedMinutes!;
+        _isTimerRunning = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -610,13 +640,22 @@ class _Header extends StatelessWidget {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Row(
+              children: <Widget>[
+                Row(
                   children: [
-                    CircleAvatar(
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => editProfile()),
+                        );
+                      },
+                      child:CircleAvatar(
                       radius: 20,
                       backgroundImage: AssetImage("images/myImage.png"),
                     ),
+                    ),
+                    
                     SizedBox(width: 12),
                     Text(
                       "Good evening",
@@ -631,21 +670,35 @@ class _Header extends StatelessWidget {
                 SizedBox(
                   width: 100,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset('images/icon_bell.png'),
-                      Image.asset("images/icon_recent.png"),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => editProfile(),
-                            ),
-                          );
-                        },
-                        child: Image.asset("images/icon_settings.png"),
+                      SizedBox(
+                        width: 100,
+                        height: 50,
+                        child: DropdownButton<int>(
+                          isExpanded: true,
+                          hint: Text(
+                            'Select minutes',
+                            style: TextStyle(
+                                fontSize: 11, color: MyColors.whiteColor),
+                          ),
+                          value: _selectedMinutes,
+                          onChanged: (int? newValue) {
+                            setState(() {
+                              _selectedMinutes = newValue;
+                            });
+                          },
+                          items: <int>[1, 5, 10, 15, 30, 45, 60]
+                              .map<DropdownMenuItem<int>>((int value) {
+                            return DropdownMenuItem<int>(
+                              value: value,
+                              child: Text('$value minutes',
+                              ),
+                            );
+                          }).toList(),
+                        ),
                       ),
+                      
                     ],
                   ),
                 ),
@@ -679,6 +732,33 @@ class _Header extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 10),
+                SizedBox(
+                  width: 80,
+                  height: 35,
+                  child: ElevatedButton(
+                    onPressed: startTimer,
+                    child: Text(
+                      'Start Timer',
+                      style: TextStyle(fontSize: 10),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                if (_isTimerRunning)
+                  CountdownTimer(
+                    endTime: _endTime,
+                    onEnd: onEnd,
+                    widgetBuilder: (_, CurrentRemainingTime? time) {
+                      if (time == null) {
+                        return Text('Timer Ended');
+                      }
+                      return Text(
+                        'Time left: ${time.min ?? 0} min : ${time.sec ?? 0} sec',
+                        style: TextStyle(fontSize: 14,color: Colors.white
+                        ),
+                      );
+                    },
+                  ),
               ],
             ),
             const SizedBox(
