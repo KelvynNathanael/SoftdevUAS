@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,48 @@ class GlobalPlayerState {
   static Map<String, List<String>> playlists = {};
   static List<String> playlistToAdd = [];
   static List<String> recentSearches = [];
+
+  static Map<String, dynamic> assets = {
+    "images": {
+      "home": [
+        "american-dream.jpg",
+        "2010s-mix.png",
+        "AUSTIN.jpg",
+        "chill-mix.png",
+        "Daily-Mix-1.jpg",
+        "Drake-Mix.jpg",
+        "For-All-The-Dogs.jpg",
+        "Offset-Mix.jpg",
+        "Rap-Workout.jpg",
+        "Upbeat-Mix.jpg",
+        "UTOPIA.jpg"
+      ],
+    },
+  };
+
+  // Method to get all image paths
+  static List<String> getAllImagePaths() {
+    List<String> imagePaths = [];
+    assets['images'].forEach((key, value) {
+      if (value is List) {
+        value.forEach((image) {
+          imagePaths.add('$image');
+        });
+      }
+    });
+    return imagePaths;
+  }
+
+  // Method to get a random image path
+  static String getRandomImagePath() {
+    final allImagePaths = getAllImagePaths();
+    if (allImagePaths.isNotEmpty) {
+      final randomIndex = Random().nextInt(allImagePaths.length);
+      return allImagePaths[randomIndex];
+    }
+    return ''; // Return an empty string if no images are available
+  }
+
   static void deletePlaylist(String playlistName) {
     if (playlists.containsKey(playlistName)) {
       playlists.remove(playlistName);

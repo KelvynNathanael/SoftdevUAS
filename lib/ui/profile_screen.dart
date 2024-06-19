@@ -79,6 +79,7 @@ class _ProfilePlaylists extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: [
                 ...GlobalPlayerState.playlists.keys.map((playlistName) {
+                  final randomImage = GlobalPlayerState.getRandomImagePath();
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
@@ -91,7 +92,7 @@ class _ProfilePlaylists extends StatelessWidget {
                               return bloc;
                             },
                             child: PlaylistSearchScreen(
-                              cover: "Rap-Workout.jpg",
+                              cover: randomImage,
                             ),
                           ),
                         ),
@@ -99,7 +100,7 @@ class _ProfilePlaylists extends StatelessWidget {
                     },
                     child: _PlaylistChip(
                       title: playlistName,
-                      image: "Rap-Workout.jpg",
+                      image: randomImage,
                     ),
                   );
                 }).toList(),

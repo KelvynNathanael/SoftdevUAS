@@ -18,7 +18,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController searchController = TextEditingController();
-
+  final randomImage = GlobalPlayerState.getRandomImagePath();
   void _addRecentSearch(String search) {
     if (search.isNotEmpty) {
       setState(() {
@@ -54,8 +54,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 builder: (context) => BlocProvider.value(
                   value: bloc,
                   child: PlaylistSearchScreen(
-                    cover:
-                        "Drake-Mix.jpg", // Ganti dengan cover yang sesuai
+                    cover: randomImage, // Ganti dengan cover yang sesuai
                   ),
                 ),
               ),
@@ -126,8 +125,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       .where((search) => search.isNotEmpty)
                       .map((search) => SliverToBoxAdapter(
                             child: AlbumChip(
-                              image:
-                                  "Drake-Mix.jpg", // Change to appropriate cover
+                              image: randomImage, // Change to appropriate cover
                               albumName: search,
                               artistName: search,
                               size: 47,
