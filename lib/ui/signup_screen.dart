@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
 import 'package:mobile/globals.dart'; // Import GlobalPlayerState
-import 'package:mobile/ui/dashboard_screen.dart';
+import 'package:mobile/ui/login_screen.dart'; // Import LoginScreen
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -222,7 +222,7 @@ class _SignupScreenState extends State<SignupScreen> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const DashBoardScreen(),
+                builder: (context) => LoginScreen(),
               ),
             );
           }

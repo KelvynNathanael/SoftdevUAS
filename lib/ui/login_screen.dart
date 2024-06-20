@@ -10,15 +10,13 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        width: 360,
-        height: 800,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment(-1, 0),
-            end: Alignment(-1, -4.938271999359131),
+          gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
             colors: [
-              Color.fromRGBO(119, 18, 18, 1),
-              Color.fromRGBO(49, 12, 12, 1),
+              Color.fromRGBO(119, 18, 18, 1), // Dark red
+              Color.fromRGBO(49, 12, 12, 1), // Darker red
             ],
           ),
         ),
@@ -111,7 +109,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Container(
-                    width: 260,
+                    width: 337,
                     height: 48,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -137,7 +135,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Container(
-                    width: 260,
+                    width: 337,
                     height: 48,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),

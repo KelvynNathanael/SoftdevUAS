@@ -245,7 +245,7 @@ class _ProfileHeader extends StatelessWidget {
                     color: MyColors.whiteColor,
                   ),
                 ),
-                const SizedBox(height: 65),
+                const SizedBox(height: 11),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
