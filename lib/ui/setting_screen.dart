@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
 import 'package:mobile/ui/profile_screen.dart';
 import 'package:mobile/widgets/bottom_player.dart';
+import 'package:mobile/globals.dart'; // Import the globals.dart
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({super.key});
@@ -128,13 +129,13 @@ class _ProfileSection extends StatelessWidget {
                     ),
                   );
                 },
-                child: const Row(
+                child: Row(
                   children: [
-                    CircleAvatar(
+                    const CircleAvatar(
                       radius: 27,
                       backgroundImage: AssetImage("images/myImage.png"),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Column(
@@ -142,14 +143,14 @@ class _ProfileSection extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          "Mohammad",
-                          style: TextStyle(
+                          GlobalPlayerState.username, // Display the username from GlobalPlayerState
+                          style: const TextStyle(
                             fontFamily: "AB",
                             fontSize: 18,
                             color: MyColors.whiteColor,
                           ),
                         ),
-                        Text(
+                        const Text(
                           "View Profile",
                           style: TextStyle(
                             fontFamily: "AM",

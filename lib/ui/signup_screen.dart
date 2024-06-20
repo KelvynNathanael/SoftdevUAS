@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
+import 'package:mobile/globals.dart'; // Import GlobalPlayerState
 import 'package:mobile/ui/dashboard_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -10,9 +11,9 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  String email = "";
-  String name = "";
-  String password= "";
+  String email = '';
+  String name = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -94,47 +95,6 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-
-  Widget _buildNextButton() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 50), 
-      child: GestureDetector(
-        onTap: () {
-          if (email.length >= 6 && password.length >= 6 && name.length >= 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DashBoardScreen(),
-              ),
-            );
-          }
-        },
-        child: Container(
-          height: 45,
-          width: 90,
-          decoration: BoxDecoration(
-            color: (email.length >= 6)
-                ? const Color.fromARGB(255, 0, 0, 0)
-                : const Color.fromARGB(255, 0, 0, 0),
-            borderRadius: const BorderRadius.all(
-              Radius.circular(25),
-            ),
-          ),
-          child: const Center(
-            child: Text(
-              "Next",
-              style: TextStyle(
-                fontFamily: "AB",
-                color: Color.fromARGB(255, 255, 255, 255),
-                fontSize: 15,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _buildNameInput() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +140,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 Visibility(
-                  visible: name.length > 0,
+                  visible: name.isNotEmpty,
                   child: Image.asset("images/icon_tic.png"),
                 ),
               ],
@@ -220,9 +180,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: TextField(
                     onChanged: (value) {
                       setState(() {
-                        password = value; // Update this to handle password instead
+                        password = value;
                       });
                     },
+                    obscureText: true,
                     style: const TextStyle(
                       fontFamily: "AM",
                       fontSize: 14,
@@ -236,7 +197,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 Visibility(
-                  visible: password.length > 6, // Update this to handle password visibility logic
+                  visible: password.length > 6,
                   child: Image.asset("images/icon_tic.png"),
                 ),
               ],
@@ -244,6 +205,49 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildNextButton() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 50),
+      child: GestureDetector(
+        onTap: () {
+          if (email.isNotEmpty && password.isNotEmpty && name.isNotEmpty) {
+            setState(() {
+              GlobalPlayerState.email = email;
+              GlobalPlayerState.password = password;
+              GlobalPlayerState.username = name;
+            });
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DashBoardScreen(),
+              ),
+            );
+          }
+        },
+        child: Container(
+          height: 45,
+          width: 90,
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 0, 0, 0),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(25),
+            ),
+          ),
+          child: const Center(
+            child: Text(
+              "Next",
+              style: TextStyle(
+                fontFamily: "AB",
+                color: Color.fromARGB(255, 255, 255, 255),
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
