@@ -16,6 +16,11 @@ class GlobalPlayerState {
   static Map<String, List<String>> playlists = {};
   static List<String> playlistToAdd = [];
   static List<String> recentSearches = [];
+
+  static String username ="";
+  static String email = "";
+  static String password = "";
+
   static void deletePlaylist(String playlistName) {
     if (playlists.containsKey(playlistName)) {
       playlists.remove(playlistName);
@@ -45,17 +50,15 @@ class GlobalPlayerState {
   static Future<void> playTrackAtCurrentIndex() async {
     final track = playlistTracks[currentTrackIndex];
     final yt = YoutubeExplode();
-    final searchResult =
-        await yt.search.search("${track.trackName} ${track.artistName}");
+    final searchResult = await yt.search.search("${track.trackName} ${track.artistName}");
     if (searchResult.isNotEmpty) {
       final videoId = searchResult.first.id.value;
       var manifest = await yt.videos.streamsClient.getManifest(videoId);
       var audioUrl = manifest.audioOnly.last.url;
       await audioPlayer.play(UrlSource(audioUrl.toString()));
 
-      final dominantColor =
-          await PaletteGenerator.fromImageProvider(NetworkImage(track.image))
-              .then((palette) => palette.dominantColor?.color ?? Colors.black);
+      final dominantColor = await PaletteGenerator.fromImageProvider(NetworkImage(track.image))
+          .then((palette) => palette.dominantColor?.color ?? Colors.black);
 
       currentMusic.value = Music(
         trackId: track.trackId,
@@ -78,4 +81,6 @@ class GlobalPlayerState {
       likes.add(trackId);
     }
   }
+
+  // Add your additional methods or functionalities here
 }

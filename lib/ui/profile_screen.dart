@@ -112,7 +112,7 @@ class _ProfilePlaylists extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "See all playlists",
                   style: TextStyle(
                     fontFamily: "AM",
@@ -120,7 +120,7 @@ class _ProfilePlaylists extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward,
                   color: Colors.white,
                 ),
@@ -233,6 +233,15 @@ class _ProfileHeader extends StatelessWidget {
                         fontSize: 12,
                       ),
                     ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  GlobalPlayerState.username, // Menampilkan nama pengguna
+                  style: const TextStyle(
+                    fontFamily: "AB",
+                    fontSize: 24,
+                    color: MyColors.whiteColor,
                   ),
                 ),
                 const SizedBox(height: 65),

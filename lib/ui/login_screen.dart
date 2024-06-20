@@ -1,219 +1,164 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/globals.dart'; // Import GlobalPlayerState
+import 'package:mobile/ui/dashboard_screen.dart'; // Import DashboardScreen
 
 class LoginScreen extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    // Figma Flutter Generator LoginScreen - FRAME
-    return Container(
+    return Scaffold(
+      body: Container(
         width: 360,
         height: 800,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-              begin: Alignment(-1, 3.078285231087447e-15),
-              end: Alignment(-1.4043778736905514e-15, -4.938271999359131),
-              colors: [
-                Color.fromRGBO(119, 18, 18, 1),
-                Color.fromRGBO(49, 12, 12, 1)
-              ]),
+            begin: Alignment(-1, 0),
+            end: Alignment(-1, -4.938271999359131),
+            colors: [
+              Color.fromRGBO(119, 18, 18, 1),
+              Color.fromRGBO(49, 12, 12, 1),
+            ],
+          ),
         ),
-        child: Stack(children: <Widget>[
-          Positioned(top: 1, left: -5, child: Container()),
-          Positioned(
-              top: 529,
-              left: 270,
-              child: Text(
-                'Lupa password?',
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                    color: Color.fromRGBO(245, 245, 245, 1),
-                    fontFamily: 'Montserrat',
-                    fontSize: 15,
-                    letterSpacing: -0.30000001192092896,
-                    fontWeight: FontWeight.normal,
-                    height: 1,
-                    decoration: TextDecoration.none),
-              )),
-          Positioned(
-              top: 397,
-              left: 50,
-              child: Container(
-                  width: 337,
-                  height: 49,
-                  child: Stack(children: <Widget>[
-                    Positioned(
-                        top: 17,
-                        left: 19,
-                        child: Text(
-                          'Email',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: Color.fromRGBO(245, 245, 245, 1),
-                              fontFamily: 'Montserrat',
-                              fontSize: 15,
-                              letterSpacing: -0.30000001192092896,
-                              fontWeight: FontWeight.normal,
-                              height: 1,
-                              decoration: TextDecoration.none),
-                        )),
-                    Positioned(
-                        top: 0,
-                        left: 0,
-                        child: Container(
-                            width: 337,
-                            height: 49,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(45),
-                                topRight: Radius.circular(45),
-                                bottomLeft: Radius.circular(45),
-                                bottomRight: Radius.circular(45),
-                              ),
-                              border: Border.all(
-                                color: Color.fromRGBO(245, 245, 245, 1),
-                                width: 3,
-                              ),
-                            ))),
-                  ]))),
-          Positioned(
+        child: Stack(
+          children: <Widget>[
+            Positioned(
+              top: 1,
+              left: -5,
+              child: Container(),
+            ),
+            Positioned(
               top: 569,
               left: 50,
               child: Container(
-                  width: 337,
-                  height: 49,
-                  child: Stack(children: <Widget>[
+                width: 337,
+                height: 49,
+                child: Stack(
+                  children: <Widget>[
                     Positioned(
-                        top: 0,
-                        left: 0,
+                      top: 0,
+                      left: 0,
+                      child: GestureDetector(
+                        onTap: () {
+                          String inputEmail = emailController.text;
+                          String inputPassword = passwordController.text;
+
+                          if (inputEmail == GlobalPlayerState.email &&
+                              inputPassword == GlobalPlayerState.password) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DashBoardScreen(),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Invalid email or password'),
+                              ),
+                            );
+                          }
+                        },
                         child: Container(
-                            width: 337,
-                            height: 49,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(45),
-                                topRight: Radius.circular(45),
-                                bottomLeft: Radius.circular(45),
-                                bottomRight: Radius.circular(45),
+                          width: 337,
+                          height: 49,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8),
+                              bottomLeft: Radius.circular(8),
+                              bottomRight: Radius.circular(8),
+                            ),
+                            color: Color.fromRGBO(51, 0, 0, 1),
+                          ),
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          child: Center(
+                            child: Text(
+                              'Login',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Color.fromRGBO(250, 250, 250, 1),
+                                fontFamily: 'ABeeZee',
+                                fontSize: 16,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.normal,
+                                height: 1.25,
                               ),
-                              color: Color.fromRGBO(18, 18, 18, 1),
-                              border: Border.all(
-                                color: Color.fromRGBO(255, 255, 255, 1),
-                                width: 3,
-                              ),
-                            ))),
-                    Positioned(
-                        top: 17,
-                        left: 146,
-                        child: Text(
-                          'Login',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Color.fromRGBO(245, 245, 245, 1),
-                              fontFamily: 'Montserrat',
-                              fontSize: 15,
-                              letterSpacing: -0.30000001192092896,
-                              fontWeight: FontWeight.normal,
-                              height: 1,
-                              decoration: TextDecoration.none),
-                        )),
-                  ]))),
-          Positioned(
-              top: 470,
-              left: 50,
-              child: Container(
-                  width: 337,
-                  height: 49,
-                  child: Stack(children: <Widget>[
-                    Positioned(
-                        top: 17,
-                        left: 19,
-                        child: Text(
-                          'Password',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: Color.fromRGBO(245, 245, 245, 1),
-                              fontFamily: 'Montserrat',
-                              fontSize: 15,
-                              letterSpacing: -0.30000001192092896,
-                              fontWeight: FontWeight.normal,
-                              height: 1,
-                              decoration: TextDecoration.none),
-                        )),
-                    Positioned(
-                        top: 0,
-                        left: 0,
-                        child: Container(
-                            width: 337,
-                            height: 49,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(45),
-                                topRight: Radius.circular(45),
-                                bottomLeft: Radius.circular(45),
-                                bottomRight: Radius.circular(45),
-                              ),
-                              border: Border.all(
-                                color: Color.fromRGBO(245, 245, 245, 1),
-                                width: 3,
-                              ),
-                            ))),
-                    Positioned(
-                        top: 18,
-                        left: 302,
-                        child: Container(
-                            width: 21,
-                            height: 14,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('assets/eye.png'),
-                                  fit: BoxFit.fitWidth),
-                            ))),
-                  ]))),
-          Positioned(
-              top: 801,
-              left: 100,
-              child: Text(
-                'Belum punya akun? Daftar sekarang',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Color(0xffFFFFFF),
-                    fontFamily: 'Montserrat',
-                    fontSize: 15,
-                    letterSpacing: -0.30000001192092896,
-                    fontWeight: FontWeight.normal,
-                    height: 1,
-                    decoration: TextDecoration.none),
-              )),
-          Positioned(
-              top: 639,
-              left: 182,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text(
-                  'Back',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                      fontFamily: 'Sansation',
-                      fontSize: 15,
-                      letterSpacing: 0,
-                      fontWeight: FontWeight.normal,
-                      height: 1,
-                      decoration: TextDecoration.none),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              )),
-          Positioned(
-              top: 94,
-              left: 125,
-              child: Container(
-                  width: 167,
-                  height: 216,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/logo.png'),
-                        fit: BoxFit.fitWidth),
-                  ))),
-        ]));
+              ),
+            ),
+            Positioned(
+              top: 305,
+              left: 50,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Email',
+                    style: TextStyle(
+                      fontFamily: 'ABeeZee',
+                      fontSize: 14,
+                      color: Color.fromRGBO(250, 250, 250, 1),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Container(
+                    width: 260,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Color.fromRGBO(255, 255, 255, 0.1),
+                    ),
+                    child: TextField(
+                      controller: emailController,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16),
+                  Text(
+                    'Password',
+                    style: TextStyle(
+                      fontFamily: 'ABeeZee',
+                      fontSize: 14,
+                      color: Color.fromRGBO(250, 250, 250, 1),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Container(
+                    width: 260,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Color.fromRGBO(255, 255, 255, 0.1),
+                    ),
+                    child: TextField(
+                      controller: passwordController,
+                      obscureText: true,
+                      style: TextStyle(color: Colors.white),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
