@@ -752,7 +752,7 @@ class _HeaderState extends State<_Header> {
                       if (time == null) {
                         return Text('Timer Ended');
                       }
-                      return Text(
+                      return Text( 
                         'Time left: ${time.min ?? 0} min : ${time.sec ?? 0} sec',
                         style: TextStyle(fontSize: 14,color: Colors.white
                         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
+import 'package:mobile/data/userData.dart';
 import 'package:mobile/ui/dashboard_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -13,6 +14,12 @@ class _SignupScreenState extends State<SignupScreen> {
   String email = "";
   String name = "";
   String password= "";
+
+void _signup() async {
+    await UserData.saveUser(email, password, name);
+    Navigator.pop(context); // Return to login screen
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +60,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Widget _buildEmailInput() {
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -65,6 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
           textAlign: TextAlign.start,
         ),
+
         Container(
           height: 51,
           width: MediaQuery.of(context).size.width,
@@ -100,6 +109,7 @@ class _SignupScreenState extends State<SignupScreen> {
       padding: const EdgeInsets.only(bottom: 50), 
       child: GestureDetector(
         onTap: () {
+          _signup();
           if (email.length >= 6 && password.length >= 6 && name.length >= 1) {
             Navigator.push(
               context,
@@ -217,7 +227,7 @@ class _SignupScreenState extends State<SignupScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  child: TextField(
+                  child: TextFormField(
                     onChanged: (value) {
                       setState(() {
                         password = value; // Update this to handle password instead
@@ -294,4 +304,6 @@ class _Header extends StatelessWidget {
       ),
     );
   }
+
+ 
 }
