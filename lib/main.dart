@@ -6,7 +6,6 @@ import 'firebase_options.dart';
 
 void main() {
   initServiceLocator();
-  _initializeFirebase();
   runApp(const MyApp());
 }
 
@@ -23,10 +22,4 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
     );
   }
-}
-
-_initializeFirebase() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 }
