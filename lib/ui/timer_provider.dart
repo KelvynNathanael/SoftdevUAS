@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class TimerProvider with ChangeNotifier {
-  int _seconds = 10;  // Start from 10 seconds
+  int _seconds = 90;  // Start from 10 seconds
   Timer? _timer;
 
   int get seconds => _seconds;
