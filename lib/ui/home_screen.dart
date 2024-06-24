@@ -70,9 +70,9 @@ class HomeScreen extends StatefulWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset('images/niel2ganteng.jpg'),
+          Image.asset('images/hadiah.png'),
           SizedBox(height: 10), // Add some space between the image and text
-          Text('Selamat Anda Mendapatkan Budak + Akan segera di antar kerumah anda minusnya perokok berat otw kanker .'),
+          Text('Selamat Anda Mendapatkan Hadiah.'),
         ],
       ),
       actions: [

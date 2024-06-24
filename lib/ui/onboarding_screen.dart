@@ -127,32 +127,6 @@ class _ActionButtons extends StatelessWidget {
               ),
             ),
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(MediaQuery.of(context).size.width, 49),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(25),
-                ),
-              ),
-              backgroundColor: const Color.fromARGB(255, 252, 252, 252),
-            ),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => DashBoardScreen(),
-                ),
-              );
-            },
-            child: const Text(
-              "Log in",
-              style: TextStyle(
-                fontFamily: "AB",
-                fontSize: 16,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
-          ),
         ],
       ),
     );
