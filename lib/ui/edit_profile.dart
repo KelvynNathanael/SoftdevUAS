@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/ui/onboarding_screen.dart';
 
 void main() {
   runApp(editProfile());
@@ -135,18 +136,29 @@ class editProfile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 17,
-                    left: 134,
-                    child: Text(
-                      'Log Out',
-                      textAlign: TextAlign.center,
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(MediaQuery.of(context).size.width, 49),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(25),
+                        ),
+                      ),
+                      backgroundColor: const Color.fromARGB(255, 252, 252, 252),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => OnBoardingScreen(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Log out",
                       style: TextStyle(
-                        color: Color.fromRGBO(245, 245, 245, 1),
-                        fontFamily: 'Montserrat',
-                        fontSize: 15,
-                        fontWeight: FontWeight.normal,
-                        decoration: TextDecoration.none,
+                        fontFamily: "AB",
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 0, 0, 0),
                       ),
                     ),
                   ),
