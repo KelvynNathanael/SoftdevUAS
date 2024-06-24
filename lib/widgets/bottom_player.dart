@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
 import 'package:mobile/data/model/music.dart';
 import 'package:mobile/globals.dart';
-import 'package:mobile/ui/listening_on_screen.dart';
 import 'package:mobile/ui/music_player.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
@@ -208,13 +207,7 @@ class _BottomPlayerState extends State<BottomPlayer> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const ListeningOn(),
-                                ),
-                              );
-                            },
+                            onTap: () {},
                             child: Image.asset(
                               'images/icon_listen.png',
                               color: const Color.fromARGB(255, 190, 190, 190),

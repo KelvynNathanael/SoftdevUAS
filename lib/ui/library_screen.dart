@@ -43,7 +43,7 @@ class LibraryScreen extends StatelessWidget {
                   slivers: [
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 25, top: 25),
+                        padding: const EdgeInsets.only(bottom: 10, top: 25),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -91,12 +91,9 @@ class LibraryScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SliverToBoxAdapter(
-                      child: OptionsList(),
-                    ),
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 30, bottom: 10),
+                        padding: const EdgeInsets.only(bottom: 25),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -414,71 +411,6 @@ class _LikedSongsSection extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class LibraryOptionsChip extends StatelessWidget {
-  const LibraryOptionsChip({super.key, required this.index});
-  final int index;
-
-  @override
-  Widget build(BuildContext context) {
-    List<String> chipTitle = [
-      "Playlists",
-      "Artists",
-      "Albums",
-      "Podcasts & shows"
-    ];
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: Row(
-        children: [
-          Container(
-            height: 33,
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: MyColors.lightGrey,
-                width: 1,
-              ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(15),
-              ),
-            ),
-            child: Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Text(
-                  chipTitle[index],
-                  style: const TextStyle(
-                    fontFamily: "AM",
-                    fontSize: 12,
-                    color: MyColors.whiteColor,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class OptionsList extends StatelessWidget {
-  const OptionsList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 33,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 4,
-        itemBuilder: (context, index) {
-          return LibraryOptionsChip(index: index);
-        },
       ),
     );
   }
