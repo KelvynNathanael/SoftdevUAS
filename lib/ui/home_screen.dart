@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:mobile/DI/service_locator.dart';
@@ -22,47 +23,119 @@ import 'package:mobile/globals.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:audioplayers/audioplayers.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+import 'timer_provider.dart';
+import 'dart:async';
+
+
+class HomeScreen extends StatefulWidget {
+    const HomeScreen({super.key});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+  
+  }
+  class _HomeScreenState extends State<HomeScreen> {
+  Timer? _timer;
+  int _seconds = 0;
+  final int targetMinutes = 0;
+  final int targetSeconds = 10;
+  bool _popupShown = false; 
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _seconds++;
+      });
+
+      int totalTargetSeconds = (targetMinutes * 60) + targetSeconds;
+
+      if (_seconds == totalTargetSeconds && !_popupShown) {
+        _showPopup();
+        _popupShown = true; // set flag biar pop up muncul 1x aj
+      }
+    });
+  }
+
+  void _showPopup() {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text('CLAIM HADIAH ANDA'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset('images/niel2ganteng.jpg'),
+          SizedBox(height: 10), // Add some space between the image and text
+          Text('Selamat Anda Mendapatkan Budak + Akan segera di antar kerumah anda minusnya perokok berat otw kanker .'),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('OK'),
+        ),
+      ],
+    ),
+  );
+}
+
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color.fromRGBO(119, 18, 18, 1), // Dark red
-              Color.fromRGBO(49, 12, 12, 1), // Darker red
-            ],
+    return ChangeNotifierProvider(
+      create: (_) => TimerProvider()..startTimer(),
+      child: Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromRGBO(119, 18, 18, 1), // Dark red
+                Color.fromRGBO(49, 12, 12, 1), // Darker red
+              ],
+            ),
           ),
-        ),
-        child: SafeArea(
-          bottom: false,
-          child: Stack(
-            alignment: AlignmentDirectional.bottomCenter,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: CustomScrollView(
-                  slivers: [
-                    _Header(),
-                    _JumpBackin(),
-                    _TopMixes(),
-                    _RecentPlays(),
-                    SliverPadding(
-                      padding: EdgeInsets.only(bottom: 100),
-                    ),
-                  ],
+          child: SafeArea(
+            bottom: false,
+            child: Stack(
+              alignment: AlignmentDirectional.bottomCenter,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: CustomScrollView(
+                    slivers: [
+                      _Header(),
+                      _JumpBackin(),
+                      _TopMixes(),
+                      _RecentPlays(),
+                      SliverPadding(
+                        padding: EdgeInsets.only(bottom: 100),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(bottom: 64),
-                child: BottomPlayer(),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.only(bottom: 64),
+                  child: BottomPlayer(),
+                ),
+                TimerOverlay(),
+              ],
+            ),
           ),
         ),
       ),
@@ -191,6 +264,46 @@ class _RecentPlaysState extends State<_RecentPlays> {
           builder: (context, snapshot) {
             return createMusicList('Recently played', snapshot);
           },
+        ),
+      ),
+    );
+  }
+}
+
+class TimerOverlay extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final seconds = context.watch<TimerProvider>().seconds;
+
+    if (seconds == 0) {
+      return SizedBox.shrink();
+    }
+
+    return Positioned(
+      top: 100,
+      right: 20,
+      child: Container(
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.black54,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: [
+            Image.asset(
+              'images/hadiah.png',
+              width: 24,
+              height: 24,
+            ),
+            SizedBox(width: 8),
+            Text(
+              'Time: $seconds s',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+            ),
+          ],
         ),
       ),
     );
