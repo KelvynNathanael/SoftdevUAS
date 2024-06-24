@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/constants/constants.dart';
+import 'package:mobile/ui/agreement.dart'; // Import the Agreement screen
 import 'package:mobile/ui/login_screen.dart';
 import 'package:mobile/ui/signup_screen.dart';
 
@@ -9,19 +10,17 @@ class OnBoardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Set the gradient background for the entire Scaffold
       body: Container(
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color.fromRGBO(119, 18, 18, 1), // Dark red
-              const Color.fromRGBO(49, 12, 12, 1), // Darker red
+              Color.fromRGBO(119, 18, 18, 1), // Dark red
+              Color.fromRGBO(49, 12, 12, 1), // Darker red
             ],
           ),
         ),
-        // Center all content within the gradient container
         child: Center(
           child: SingleChildScrollView(
             child: Column(
@@ -84,7 +83,8 @@ class _ActionButtons extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => const SignupScreen(),
+                  builder: (context) =>
+                      const Agreement(), // Navigate to Agreement screen
                 ),
               );
             },
