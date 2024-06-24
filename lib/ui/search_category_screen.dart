@@ -59,18 +59,6 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                               color: MyColors.whiteColor,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) =>
-                              //         const ScanSpotifyCodeScreen(),
-                              //   ),
-                              // );
-                            },
-                            child: Image.asset("images/icon_camera.png"),
-                          ),
                         ],
                       ),
                     ),
@@ -109,7 +97,6 @@ class _SearchCategoryScreenState extends State<SearchCategoryScreen> {
                       ],
                     ),
                   ),
-                  
                   const SliverToBoxAdapter(
                     child: Padding(
                       padding: EdgeInsets.only(top: 25, bottom: 10),
